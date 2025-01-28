@@ -1,0 +1,53 @@
+services:
+  traefik:
+    image: traefik:v3.2
+    container_name: traefik
+    restart: unless-stopped
+    ports:
+      - "8010:8010"  # HTTP entrypoint
+      - "8011:8011"  # Dashboard
+    volumes:
+      - ./traefik.yaml:/etc/traefik.yaml:ro
+      - ./routes.yaml:/etc/routes.yaml:ro
+      - /var/run/docker.sock:/var/run/docker.sock  # ให้ Traefik ติดต่อกับ Docker ได้
+    networks:
+      - proxy
+  my-server:
+    image: 'my-server:latest'
+    container_name: my-server
+    restart: unless-stopped
+    # image: docker.frappet.com/training/oom_be:latest
+    environment:
+      DATABASE_URL: file:./dev.db
+      # DATABASE_URL: file:/app/data/dev.db  # เปลี่ยนให้ชี้ไปที่ path ใน volume
+      TZ: Asia/Bangkok
+      DEBUG: "*"
+      # - TZ=Asia/Bangkok
+    ports:
+      - 8000:80
+    # deploy:
+    #   mode: replicated
+    #   replicas: 3
+
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.fe.rule=Host(`fe.oom.home`)"
+    build:
+      context: .
+    # command: >
+    #     sh -c "npx prisma generate && npx prisma migrate deploy && npm start"
+    volumes:
+      - sqlite_data:/app/data
+      - ./data/letsencrypt:/etc/letsencrypt
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.my-server.rule=Host(`bunny.home`)"
+      - "traefik.http.services.my-server.loadbalancer.server.port=80"
+      - "traefik.http.routers.my-server.entrypoints=unsecure"
+
+networks:
+  proxy:
+    external: true
+
+volumes:
+  sqlite_data:

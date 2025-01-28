@@ -1,0 +1,19 @@
+http:
+  routers:
+    # myweb:
+    #   service: my-web
+    #   rule: "Host(`myweb.taii.home`)"
+    my-service:
+      rule: "Host(`bunny.home`) && PathPrefix(`/api/product`)"
+      service: my-service
+      entryPoints:
+        - unsecure
+  services:
+    # my-web:
+    #   loadBalancer:  
+    #     servers:
+    #     - url: 'http://192.168.1.128/:8001'
+    my-service:
+      loadBalancer:
+        servers:
+          - url: 'http://192.168.1.196:8000'

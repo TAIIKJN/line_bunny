@@ -1,0 +1,16 @@
+entrypoints:
+  unsecure:
+    address: ":8010"
+
+providers:
+  docker:
+    exposedByDefault: false
+  file:
+    filename: routes.yaml
+
+api:  # enable dashboard
+  dashboard: true
+  insecure: true
+
+log:
+  level: DEBUG
