@@ -14,17 +14,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.productController = void 0;
 const tsoa_1 = require("tsoa");
-const axios_1 = __importDefault(require("axios"));
 const token = "mTuXUjOm8dKhn805+2xOAOfDoq5NBEzYT9hx+DbF8IFCInIHLZbZ1orjdtyrCADJmsCfKzlJUNZF9kzRw24K9zrPj4tnkJkAAsYJtO0O1eGGWOMAVoB2J2B7R03I/tp+HFYRVVD09GEod/NiCukB4QdB04t89/1O/w1cDnyilFU=";
 let productController = class productController extends tsoa_1.Controller {
-    webhook() {
+    getProductAll() {
         return __awaiter(this, void 0, void 0, function* () {
+            return "hiiii";
             // const data = {
             //   to: "USER_ID",
             //   messages: [
@@ -61,25 +58,6 @@ let productController = class productController extends tsoa_1.Controller {
             //     },
             //   }
             // );
-            const data_massage = yield axios_1.default
-                .get("https://api.line.me/v2/profile", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-                .then((response) => {
-                console.log("USER_ID : ", response.data.userId);
-            })
-                .catch((error) => {
-                var _a;
-                console.log("Error fetching profile: ", ((_a = error.response) === null || _a === void 0 ? void 0 : _a.data) || error.message);
-            });
-            console.log("data_massage", data_massage);
-        });
-    }
-    getProductAll() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return "hiiii";
         });
     }
     getProductById() {
@@ -89,9 +67,6 @@ let productController = class productController extends tsoa_1.Controller {
     }
 };
 exports.productController = productController;
-__decorate([
-    (0, tsoa_1.Get)("webhook")
-], productController.prototype, "webhook", null);
 __decorate([
     (0, tsoa_1.Get)()
 ], productController.prototype, "getProductAll", null);

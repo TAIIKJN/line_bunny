@@ -4,6 +4,8 @@
 import type { TsoaRoute } from '@tsoa/runtime';
 import {  fetchMiddlewares, ExpressTemplateService } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { webhookController } from './controllers/webhookController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { productController } from './controllers/productController';
 import type { Request as ExRequest, Response as ExResponse, RequestHandler, Router } from 'express';
 
@@ -12,6 +14,15 @@ import type { Request as ExRequest, Response as ExResponse, RequestHandler, Rout
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+    "WebhookPayload": {
+        "dataType": "refObject",
+        "properties": {
+            "event": {"dataType":"string","required":true},
+            "data": {"dataType":"any","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const templateService = new ExpressTemplateService(models, {"noImplicitAdditionalProperties":"throw-on-extras","bodyCoercion":true});
 
@@ -29,24 +40,25 @@ export function RegisterRoutes(app: Router) {
 
 
     
-        const argsproductController_webhook: Record<string, TsoaRoute.ParameterSchema> = {
+        const argswebhookController_receiveWebhook: Record<string, TsoaRoute.ParameterSchema> = {
+                payload: {"in":"body","name":"payload","required":true,"ref":"WebhookPayload"},
         };
-        app.get('/api/product/webhook',
-            ...(fetchMiddlewares<RequestHandler>(productController)),
-            ...(fetchMiddlewares<RequestHandler>(productController.prototype.webhook)),
+        app.post('/api/webhook',
+            ...(fetchMiddlewares<RequestHandler>(webhookController)),
+            ...(fetchMiddlewares<RequestHandler>(webhookController.prototype.receiveWebhook)),
 
-            async function productController_webhook(request: ExRequest, response: ExResponse, next: any) {
+            async function webhookController_receiveWebhook(request: ExRequest, response: ExResponse, next: any) {
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
             let validatedArgs: any[] = [];
             try {
-                validatedArgs = templateService.getValidatedArgs({ args: argsproductController_webhook, request, response });
+                validatedArgs = templateService.getValidatedArgs({ args: argswebhookController_receiveWebhook, request, response });
 
-                const controller = new productController();
+                const controller = new webhookController();
 
               await templateService.apiHandler({
-                methodName: 'webhook',
+                methodName: 'receiveWebhook',
                 controller,
                 response,
                 next,

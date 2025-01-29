@@ -1,12 +1,13 @@
-import { Controller, Get, Route } from "tsoa";
+import { Body, Controller, Get, Post, Response, Route } from "tsoa";
 import axios from "axios";
 
 const token =
   "mTuXUjOm8dKhn805+2xOAOfDoq5NBEzYT9hx+DbF8IFCInIHLZbZ1orjdtyrCADJmsCfKzlJUNZF9kzRw24K9zrPj4tnkJkAAsYJtO0O1eGGWOMAVoB2J2B7R03I/tp+HFYRVVD09GEod/NiCukB4QdB04t89/1O/w1cDnyilFU=";
 @Route("product")
 export class productController extends Controller {
-  @Get("webhook")
-  public async webhook() {
+  @Get()
+  public async getProductAll() {
+    return "hiiii";
     // const data = {
     //   to: "USER_ID",
     //   messages: [
@@ -43,29 +44,6 @@ export class productController extends Controller {
     //     },
     //   }
     // );
-
-    const data_massage = await axios
-      .get("https://api.line.me/v2/profile", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        console.log("USER_ID : ", response.data.userId);
-      })
-      .catch((error) => {
-        console.log(
-          "Error fetching profile: ",
-          error.response?.data || error.message
-        );
-      });
-
-    console.log("data_massage", data_massage);
-  }
-
-  @Get()
-  public async getProductAll() {
-    return "hiiii";
   }
 
   @Get("{id}")

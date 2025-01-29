@@ -1,9 +1,11 @@
 import cors from "cors";
 import express, { Express } from "express";
+import dotenv from "dotenv"
+dotenv.config();
 
 const app: Express = express();
-const port = Number(process.env.PORT) || 80;
-const apikey = process.env.APIKEY || "123456789";
+const port = Number(process.env.PORT) || 8080;
+console.log("post",process.env.PORT);
 
 app.use(cors());
 
