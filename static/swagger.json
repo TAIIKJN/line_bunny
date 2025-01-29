@@ -133,7 +133,7 @@
 			}
 		},
 		"/product": {
-			"post": {
+			"get": {
 				"operationId": "GetProductAll",
 				"responses": {
 					"200": {

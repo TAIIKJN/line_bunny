@@ -23,7 +23,7 @@ const tsoa_1 = require("tsoa");
 let webhookController = class webhookController extends tsoa_1.Controller {
     receiveWebhook(payload) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("Received Webhook:", payload);
+            console.log("Received Webhook:", payload, payload.events[0].source);
             // หากต้องการตอบกลับจากการรับ webhook
             this.setStatus(200); // ตอบกลับด้วย HTTP 200
         });

@@ -6,7 +6,7 @@ const token =
 
 @Route("product")
 export class productController extends Controller {
-  @Post()
+  @Get()
   public async getProductAll() {
     const data = {
       to: "Uaf85ed5e769f298f7255a8f0f6f9ae6a",

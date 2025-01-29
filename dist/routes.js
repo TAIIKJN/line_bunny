@@ -65,7 +65,7 @@ function RegisterRoutes(app) {
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     const argsproductController_getProductAll = {};
-    app.post('/api/product', ...((0, runtime_1.fetchMiddlewares)(productController_1.productController)), ...((0, runtime_1.fetchMiddlewares)(productController_1.productController.prototype.getProductAll)), function productController_getProductAll(request, response, next) {
+    app.get('/api/product', ...((0, runtime_1.fetchMiddlewares)(productController_1.productController)), ...((0, runtime_1.fetchMiddlewares)(productController_1.productController.prototype.getProductAll)), function productController_getProductAll(request, response, next) {
         return __awaiter(this, void 0, void 0, function* () {
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
             let validatedArgs = [];

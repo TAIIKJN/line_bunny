@@ -30,7 +30,7 @@ let productController = class productController extends tsoa_1.Controller {
                 messages: [
                     {
                         type: "flex",
-                        altText: "Here is a Flex Message",
+                        altText: "🏷 Order status for you 🍞",
                         contents: {
                             type: "bubble",
                             header: {
@@ -39,7 +39,6 @@ let productController = class productController extends tsoa_1.Controller {
                                 contents: [
                                     {
                                         type: "text",
-                                        // color:"#A61025",
                                         text: "🏷 Order status for you 🍞"
                                     }
                                 ]
@@ -49,18 +48,164 @@ let productController = class productController extends tsoa_1.Controller {
                                 layout: "vertical",
                                 contents: [
                                     {
-                                        type: "text",
-                                        text: "พ. 29 มกราคม 2568"
+                                        type: "box",
+                                        layout: "vertical",
+                                        contents: [
+                                            {
+                                                type: "text",
+                                                color: "#CC7722",
+                                                text: "⏳ Pending(รอดำเนินการ)"
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "horizontal",
+                                                contents: [
+                                                    {
+                                                        type: "separator",
+                                                        margin: "xxl",
+                                                        color: "#9E9E9E"
+                                                    },
+                                                    {
+                                                        type: "text",
+                                                        text: "Matcha Green Tea Latte",
+                                                        adjustMode: "shrink-to-fit",
+                                                        offsetStart: "10px"
+                                                    },
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        type: "box",
+                                        layout: "vertical",
+                                        contents: [
+                                            {
+                                                type: "text",
+                                                color: "#FF9F50",
+                                                text: "👨‍🍳 Preparing(กำลังเตรียม)"
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "horizontal",
+                                                contents: [
+                                                    {
+                                                        type: "separator",
+                                                        margin: "xxl",
+                                                        color: "#9E9E9E"
+                                                    },
+                                                    {
+                                                        type: "text",
+                                                        text: "Classic Hot Cocoa",
+                                                        adjustMode: "shrink-to-fit",
+                                                        offsetStart: "10px"
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "horizontal",
+                                                contents: [
+                                                    {
+                                                        type: "separator",
+                                                        margin: "xxl",
+                                                        color: "#9E9E9E"
+                                                    },
+                                                    {
+                                                        type: "text",
+                                                        text: "Caramel Cocoa",
+                                                        adjustMode: "shrink-to-fit",
+                                                        offsetStart: "10px"
+                                                    },
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        type: "box",
+                                        layout: "vertical",
+                                        contents: [
+                                            {
+                                                type: "text",
+                                                color: "#008080",
+                                                text: "🛎️ Ready to Serve(พร้อมเสิร์ฟ)"
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "horizontal",
+                                                contents: [
+                                                    {
+                                                        type: "separator",
+                                                        margin: "xxl",
+                                                        color: "#9E9E9E"
+                                                    },
+                                                    {
+                                                        type: "text",
+                                                        text: "Chocolate Fudge Cake",
+                                                        adjustMode: "shrink-to-fit",
+                                                        offsetStart: "10px"
+                                                    },
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        type: "box",
+                                        layout: "vertical",
+                                        contents: [
+                                            {
+                                                type: "text",
+                                                color: "#1E90FF",
+                                                text: "✔️ Served(เสิร์ฟแล้ว)"
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "horizontal",
+                                                contents: [
+                                                    {
+                                                        type: "separator",
+                                                        margin: "xxl",
+                                                        color: "#9E9E9E"
+                                                    },
+                                                    {
+                                                        type: "text",
+                                                        text: "Red Velvet Cake",
+                                                        adjustMode: "shrink-to-fit",
+                                                        offsetStart: "10px"
+                                                    },
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        type: "box",
+                                        layout: "vertical",
+                                        contents: [
+                                            {
+                                                type: "text",
+                                                color: "#E30B5C",
+                                                text: "❌ Canceled(ยกเลิก)"
+                                            },
+                                            {
+                                                type: "box",
+                                                layout: "horizontal",
+                                                contents: [
+                                                    {
+                                                        type: "separator",
+                                                        margin: "xxl",
+                                                        color: "#9E9E9E"
+                                                    },
+                                                    {
+                                                        type: "text",
+                                                        text: "Banoffee Pie",
+                                                        adjustMode: "shrink-to-fit",
+                                                        offsetStart: "10px"
+                                                    },
+                                                ]
+                                            }
+                                        ]
                                     }
                                 ]
                             },
-                            // footer: {
-                            //   type: "image",
-                            //   url: "https://teakandthyme.com/wp-content/uploads/2024/05/jellycat-birthday-cake-DSC_9332-edit-1600.jpg",
-                            //   size:"full",
-                            //   aspectRatio: "10:9",
-                            //   aspectMode: "cover"
-                            // },
                         }
                     },
                 ],
@@ -89,7 +234,7 @@ let productController = class productController extends tsoa_1.Controller {
 };
 exports.productController = productController;
 __decorate([
-    (0, tsoa_1.Post)()
+    (0, tsoa_1.Get)()
 ], productController.prototype, "getProductAll", null);
 __decorate([
     (0, tsoa_1.Get)("{id}")
