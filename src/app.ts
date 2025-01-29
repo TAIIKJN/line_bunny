@@ -1,6 +1,9 @@
 import cors from "cors";
-import express, { Express } from "express";
+import express, { Express, NextFunction, Request, Response } from "express";
 import dotenv from "dotenv"
+import swaggerUi from "swagger-ui-express";
+import { RegisterRoutes } from "./routes";
+import { ValidateError } from "tsoa";
 dotenv.config();
 
 const app: Express = express();
@@ -13,8 +16,7 @@ app.use(express.static("static"));
 app.use(express.json());
 app.use(express.raw());
 app.use(express.urlencoded({ extended: true }));
-import swaggerUi from "swagger-ui-express";
-import { RegisterRoutes } from "./routes";
+
 
 RegisterRoutes(app);
 app.use(
@@ -26,5 +28,17 @@ app.use(
     },
   })
 );
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  if (err instanceof ValidateError) {
+      console.log("app error",err.fields);
+      res.status(400).json({
+          message: "Validation failed",
+          errors: err.fields
+      });
+  } else {
+      res.status(500).send("Internal Server Error");
+  }
+});
 
 app.listen(port, () => console.log(`Application is running on port ${port}`));

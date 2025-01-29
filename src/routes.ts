@@ -14,11 +14,16 @@ import type { Request as ExRequest, Response as ExResponse, RequestHandler, Rout
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+    "Record_string.any_": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{},"additionalProperties":{"dataType":"any"},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "WebhookPayload": {
         "dataType": "refObject",
         "properties": {
-            "event": {"dataType":"string","required":true},
-            "data": {"dataType":"any","required":true},
+            "destination": {"dataType":"string"},
+            "events": {"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"message":{"dataType":"nestedObjectLiteral","nestedProperties":{"quoteToken":{"dataType":"string"},"text":{"dataType":"string","required":true},"type":{"dataType":"string","required":true},"id":{"dataType":"string"}},"required":true},"timestamp":{"dataType":"double","required":true},"source":{"dataType":"nestedObjectLiteral","nestedProperties":{"type":{"dataType":"string","required":true},"userId":{"dataType":"string","required":true}},"required":true},"replyToken":{"dataType":"string","required":true},"type":{"dataType":"string","required":true},"webhookEventId":{"dataType":"string"},"deliveryContext":{"ref":"Record_string.any_"},"mode":{"dataType":"string"}}},"required":true},
         },
         "additionalProperties": false,
     },
@@ -72,7 +77,7 @@ export function RegisterRoutes(app: Router) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         const argsproductController_getProductAll: Record<string, TsoaRoute.ParameterSchema> = {
         };
-        app.get('/api/product',
+        app.post('/api/product',
             ...(fetchMiddlewares<RequestHandler>(productController)),
             ...(fetchMiddlewares<RequestHandler>(productController.prototype.getProductAll)),
 

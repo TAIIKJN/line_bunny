@@ -14,50 +14,57 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.productController = void 0;
 const tsoa_1 = require("tsoa");
+const axios_1 = __importDefault(require("axios"));
 const token = "mTuXUjOm8dKhn805+2xOAOfDoq5NBEzYT9hx+DbF8IFCInIHLZbZ1orjdtyrCADJmsCfKzlJUNZF9kzRw24K9zrPj4tnkJkAAsYJtO0O1eGGWOMAVoB2J2B7R03I/tp+HFYRVVD09GEod/NiCukB4QdB04t89/1O/w1cDnyilFU=";
 let productController = class productController extends tsoa_1.Controller {
     getProductAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            return "hiiii";
-            // const data = {
-            //   to: "USER_ID",
-            //   messages: [
-            //     {
-            //       type: "flex",
-            //       altText: "This is a Flex Message",
-            //       contents: {
-            //         type: "bubble",
-            //         body: {
-            //           type: "box",
-            //           layout: "horizontal",
-            //           contents: [
-            //             {
-            //               type: "text",
-            //               text: "Hello,",
-            //             },
-            //             {
-            //               type: "text",
-            //               text: "World!",
-            //             },
-            //           ],
-            //         },
-            //       },
-            //     },
-            //   ],
-            // };
-            // const data_massage = await axios.post(
-            //   "https://api.line.me/v2/bot/message/push",
-            //   data,
-            //   {
-            //     headers: {
-            //       Authorization: `Bearer ${token}`,
-            //       "Content-Type": "application/json",
-            //     },
-            //   }
-            // );
+            const data = {
+                to: "Ucd021158407eed204dd36ac1579e9ab7",
+                messages: [
+                    {
+                        type: "flex",
+                        altText: "This is a Flex Message",
+                        contents: {
+                            type: "bubble",
+                            body: {
+                                type: "box",
+                                layout: "horizontal",
+                                contents: [
+                                    {
+                                        type: "text",
+                                        text: "Hello,",
+                                    },
+                                    {
+                                        type: "text",
+                                        text: "World!",
+                                    },
+                                ],
+                            },
+                        },
+                    },
+                ],
+            };
+            try {
+                const data_massage = yield axios_1.default.post("https://api.line.me/v2/bot/message/push", data, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                });
+                console.log("Message sent successfully:", data_massage.data);
+                return "Message sent successfully!";
+            }
+            catch (error) {
+                console.error("Error sending message:", error);
+                return "Failed to send message.";
+            }
         });
     }
     getProductById() {
@@ -68,7 +75,7 @@ let productController = class productController extends tsoa_1.Controller {
 };
 exports.productController = productController;
 __decorate([
-    (0, tsoa_1.Get)()
+    (0, tsoa_1.Post)()
 ], productController.prototype, "getProductAll", null);
 __decorate([
     (0, tsoa_1.Get)("{id}")

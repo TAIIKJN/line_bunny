@@ -7,16 +7,90 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"Record_string.any_": {
+				"properties": {},
+				"additionalProperties": {},
+				"type": "object",
+				"description": "Construct a type with a set of properties K of type T"
+			},
 			"WebhookPayload": {
 				"properties": {
-					"event": {
+					"destination": {
 						"type": "string"
 					},
-					"data": {}
+					"events": {
+						"items": {
+							"properties": {
+								"message": {
+									"properties": {
+										"quoteToken": {
+											"type": "string"
+										},
+										"text": {
+											"type": "string"
+										},
+										"type": {
+											"type": "string"
+										},
+										"id": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"text",
+										"type"
+									],
+									"type": "object"
+								},
+								"timestamp": {
+									"type": "number",
+									"format": "double"
+								},
+								"source": {
+									"properties": {
+										"type": {
+											"type": "string"
+										},
+										"userId": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"type",
+										"userId"
+									],
+									"type": "object"
+								},
+								"replyToken": {
+									"type": "string"
+								},
+								"type": {
+									"type": "string"
+								},
+								"webhookEventId": {
+									"type": "string"
+								},
+								"deliveryContext": {
+									"$ref": "#/components/schemas/Record_string.any_"
+								},
+								"mode": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"message",
+								"timestamp",
+								"source",
+								"replyToken",
+								"type"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					}
 				},
 				"required": [
-					"event",
-					"data"
+					"events"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -59,7 +133,7 @@
 			}
 		},
 		"/product": {
-			"get": {
+			"post": {
 				"operationId": "GetProductAll",
 				"responses": {
 					"200": {
@@ -67,7 +141,11 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "string"
+									"type": "string",
+									"enum": [
+										"Message sent successfully!",
+										"Failed to send message."
+									]
 								}
 							}
 						}

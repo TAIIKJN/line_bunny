@@ -17,11 +17,16 @@ const webhookController_1 = require("./controllers/webhookController");
 const productController_1 = require("./controllers/productController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const models = {
+    "Record_string.any_": {
+        "dataType": "refAlias",
+        "type": { "dataType": "nestedObjectLiteral", "nestedProperties": {}, "additionalProperties": { "dataType": "any" }, "validators": {} },
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "WebhookPayload": {
         "dataType": "refObject",
         "properties": {
-            "event": { "dataType": "string", "required": true },
-            "data": { "dataType": "any", "required": true },
+            "destination": { "dataType": "string" },
+            "events": { "dataType": "array", "array": { "dataType": "nestedObjectLiteral", "nestedProperties": { "message": { "dataType": "nestedObjectLiteral", "nestedProperties": { "quoteToken": { "dataType": "string" }, "text": { "dataType": "string", "required": true }, "type": { "dataType": "string", "required": true }, "id": { "dataType": "string" } }, "required": true }, "timestamp": { "dataType": "double", "required": true }, "source": { "dataType": "nestedObjectLiteral", "nestedProperties": { "type": { "dataType": "string", "required": true }, "userId": { "dataType": "string", "required": true } }, "required": true }, "replyToken": { "dataType": "string", "required": true }, "type": { "dataType": "string", "required": true }, "webhookEventId": { "dataType": "string" }, "deliveryContext": { "ref": "Record_string.any_" }, "mode": { "dataType": "string" } } }, "required": true },
         },
         "additionalProperties": false,
     },
@@ -60,7 +65,7 @@ function RegisterRoutes(app) {
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     const argsproductController_getProductAll = {};
-    app.get('/api/product', ...((0, runtime_1.fetchMiddlewares)(productController_1.productController)), ...((0, runtime_1.fetchMiddlewares)(productController_1.productController.prototype.getProductAll)), function productController_getProductAll(request, response, next) {
+    app.post('/api/product', ...((0, runtime_1.fetchMiddlewares)(productController_1.productController)), ...((0, runtime_1.fetchMiddlewares)(productController_1.productController.prototype.getProductAll)), function productController_getProductAll(request, response, next) {
         return __awaiter(this, void 0, void 0, function* () {
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
             let validatedArgs = [];

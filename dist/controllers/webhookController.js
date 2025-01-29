@@ -24,6 +24,8 @@ let webhookController = class webhookController extends tsoa_1.Controller {
     receiveWebhook(payload) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("Received Webhook:", payload);
+            // หากต้องการตอบกลับจากการรับ webhook
+            this.setStatus(200); // ตอบกลับด้วย HTTP 200
         });
     }
 };
