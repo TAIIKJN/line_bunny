@@ -13,24 +13,183 @@ export class productController extends Controller {
       messages: [
         {
           type: "flex",
-          altText: "This is a Flex Message",
-          contents: {
+          altText:"🏷 Order status for you 🍞",
+          contents:{
             type: "bubble",
-            body: {
-              type: "box",
-              layout: "horizontal",
-              contents: [
+            header:{
+              type:"box",
+              layout:"vertical",
+              contents:[
                 {
-                  type: "text",
-                  text: "Hello,",
-                },
-                {
-                  type: "text",
-                  text: "World!",
-                },
-              ],
+                  type:"text",
+                  text:"🏷 Order status for you 🍞"
+                }
+              ]
             },
-          },
+            body:{
+              type:"box",
+              layout:"vertical",
+              contents:[
+                {
+                  type: "box",
+                  layout: "vertical",
+                  contents:[
+                    {
+                      type:"text",
+                      color:"#CC7722",
+                      text:"⏳ Pending(รอดำเนินการ)"
+                    },
+                    {
+                      type:"box",
+                      layout:"horizontal",
+                      contents:[
+                        {
+                          type: "separator",
+                          margin:"xxl",
+                          color: "#9E9E9E"
+                        },
+                        {
+                          type:"text",
+                          text:"Matcha Green Tea Latte",
+                          adjustMode:"shrink-to-fit",
+                          offsetStart:"10px"
+                        },
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "box",
+                  layout: "vertical",
+                  contents:[
+                    {
+                      type:"text",
+                      color:"#FF9F50",
+                      text:"👨‍🍳 Preparing(กำลังเตรียม)"
+                    },
+                    {
+                      type:"box",
+                      layout:"horizontal",
+                      contents:[
+                        {
+                          type: "separator",
+                          margin:"xxl",
+                          color: "#9E9E9E"
+                        },
+                        {
+                          type:"text",
+                          text:"Classic Hot Cocoa",
+                          adjustMode:"shrink-to-fit",
+                          offsetStart:"10px"
+                        },
+                      ]
+                    },
+                    {
+                      type:"box",
+                      layout:"horizontal",
+                      contents:[
+                        {
+                          type: "separator",
+                          margin:"xxl",
+                          color: "#9E9E9E"
+                        },
+                        {
+                          type:"text",
+                          text:"Caramel Cocoa",
+                          adjustMode:"shrink-to-fit",
+                          offsetStart:"10px"
+                        },
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "box",
+                  layout: "vertical",
+                  contents:[
+                    {
+                      type:"text",
+                      color:"#008080",
+                      text:"🛎️ Ready to Serve(พร้อมเสิร์ฟ)"
+                    },
+                    {
+                      type:"box",
+                      layout:"horizontal",
+                      contents:[
+                        {
+                          type: "separator",
+                          margin:"xxl",
+                          color: "#9E9E9E"
+                        },
+                        {
+                          type:"text",
+                          text:"Chocolate Fudge Cake",
+                          adjustMode:"shrink-to-fit",
+                          offsetStart:"10px"
+                        },
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "box",
+                  layout: "vertical",
+                  contents:[
+                    {
+                      type:"text",
+                      color:"#1E90FF",
+                      text:"✔️ Served(เสิร์ฟแล้ว)"
+                    },
+                    {
+                      type:"box",
+                      layout:"horizontal",
+                      contents:[
+                        {
+                          type: "separator",
+                          margin:"xxl",
+                          color: "#9E9E9E"
+                        },
+                        {
+                          type:"text",
+                          text:"Red Velvet Cake",
+                          adjustMode:"shrink-to-fit",
+                          offsetStart:"10px"
+                        },
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "box",
+                  layout: "vertical",
+                  contents:[
+                    {
+                      type:"text",
+                      color:"#E30B5C",
+                      text:"❌ Canceled(ยกเลิก)"
+                    },
+                    {
+                      type:"box",
+                      layout:"horizontal",
+                      contents:[
+                        {
+                          type: "separator",
+                          margin:"xxl",
+                          color: "#9E9E9E"
+                        },
+                        {
+                          type:"text",
+                          text:"Banoffee Pie",
+                          adjustMode:"shrink-to-fit",
+                          offsetStart:"10px"
+                        },
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+          }
         },
       ],
     };

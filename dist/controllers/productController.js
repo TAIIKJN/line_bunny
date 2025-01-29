@@ -26,28 +26,42 @@ let productController = class productController extends tsoa_1.Controller {
     getProductAll() {
         return __awaiter(this, void 0, void 0, function* () {
             const data = {
-                to: "Ucd021158407eed204dd36ac1579e9ab7",
+                to: "Uaf85ed5e769f298f7255a8f0f6f9ae6a",
                 messages: [
                     {
                         type: "flex",
-                        altText: "This is a Flex Message",
+                        altText: "Here is a Flex Message",
                         contents: {
                             type: "bubble",
-                            body: {
+                            header: {
                                 type: "box",
-                                layout: "horizontal",
+                                layout: "vertical",
                                 contents: [
                                     {
                                         type: "text",
-                                        text: "Hello,",
-                                    },
+                                        // color:"#A61025",
+                                        text: "🏷 Order status for you 🍞"
+                                    }
+                                ]
+                            },
+                            body: {
+                                type: "box",
+                                layout: "vertical",
+                                contents: [
                                     {
                                         type: "text",
-                                        text: "World!",
-                                    },
-                                ],
+                                        text: "พ. 29 มกราคม 2568"
+                                    }
+                                ]
                             },
-                        },
+                            // footer: {
+                            //   type: "image",
+                            //   url: "https://teakandthyme.com/wp-content/uploads/2024/05/jellycat-birthday-cake-DSC_9332-edit-1600.jpg",
+                            //   size:"full",
+                            //   aspectRatio: "10:9",
+                            //   aspectMode: "cover"
+                            // },
+                        }
                     },
                 ],
             };
