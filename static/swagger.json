@@ -94,6 +94,71 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"UserData": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"userId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ProductData": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"price": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"description",
+					"price",
+					"image"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"OrderData": {
+				"properties": {
+					"total": {
+						"type": "string"
+					},
+					"Quantity": {
+						"type": "number",
+						"format": "double"
+					},
+					"State": {
+						"type": "string"
+					},
+					"productId": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"total",
+					"Quantity",
+					"State",
+					"productId"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -132,6 +197,97 @@
 				}
 			}
 		},
+		"/user": {
+			"get": {
+				"operationId": "GetUserAll",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"name": {
+												"type": "string"
+											},
+											"userId": {
+												"type": "string"
+											},
+											"id": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"name",
+											"userId",
+											"id"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserData"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/user/{id}": {
+			"get": {
+				"operationId": "GetUserById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/product": {
 			"get": {
 				"operationId": "GetProductAll",
@@ -153,11 +309,103 @@
 				},
 				"security": [],
 				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateProduct",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ProductData"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/product/{id}": {
 			"get": {
 				"operationId": "GetProductById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/order": {
+			"get": {
+				"operationId": "GetOrderAll",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"enum": [
+										"Message sent successfully!",
+										"Failed to send message."
+									]
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateOrder",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/OrderData"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/order/{id}": {
+			"get": {
+				"operationId": "GetOrderById",
 				"responses": {
 					"200": {
 						"description": "Ok",

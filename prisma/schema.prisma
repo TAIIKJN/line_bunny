@@ -25,7 +25,19 @@ model Product {
   description String?
   price       String
   image       String
+
+  categories  Categories @relation(fields: [categoriesId], references: [id])
+  categoriesId String
+
   Order       Order[]
+}
+
+model Categories {
+  id          String @id @default(uuid())
+  name        String
+  description String
+
+  product     Product[]
 }
 
 model Order {

@@ -21,14 +21,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.productController = void 0;
+exports.orderController = void 0;
 const tsoa_1 = require("tsoa");
 const axios_1 = __importDefault(require("axios"));
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const token = "mTuXUjOm8dKhn805+2xOAOfDoq5NBEzYT9hx+DbF8IFCInIHLZbZ1orjdtyrCADJmsCfKzlJUNZF9kzRw24K9zrPj4tnkJkAAsYJtO0O1eGGWOMAVoB2J2B7R03I/tp+HFYRVVD09GEod/NiCukB4QdB04t89/1O/w1cDnyilFU=";
-let productController = class productController extends tsoa_1.Controller {
-    getProductAll() {
+let orderController = class orderController extends tsoa_1.Controller {
+    getOrderAll() {
         return __awaiter(this, void 0, void 0, function* () {
             const data = {
                 to: "Uaf85ed5e769f298f7255a8f0f6f9ae6a",
@@ -231,15 +231,15 @@ let productController = class productController extends tsoa_1.Controller {
             }
         });
     }
-    getProductById() {
+    getOrderById() {
         return __awaiter(this, void 0, void 0, function* () {
             return "hiiii get by ID";
         });
     }
-    createProduct(req) {
+    createOrder(req) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const data = yield prisma.product.create({
+                const data = yield prisma.order.create({
                     data: Object.assign({}, req)
                 });
                 return data;
@@ -250,17 +250,17 @@ let productController = class productController extends tsoa_1.Controller {
         });
     }
 };
-exports.productController = productController;
+exports.orderController = orderController;
 __decorate([
     (0, tsoa_1.Get)()
-], productController.prototype, "getProductAll", null);
+], orderController.prototype, "getOrderAll", null);
 __decorate([
     (0, tsoa_1.Get)("{id}")
-], productController.prototype, "getProductById", null);
+], orderController.prototype, "getOrderById", null);
 __decorate([
     (0, tsoa_1.Post)(),
     __param(0, (0, tsoa_1.Body)())
-], productController.prototype, "createProduct", null);
-exports.productController = productController = __decorate([
-    (0, tsoa_1.Route)("product")
-], productController);
+], orderController.prototype, "createOrder", null);
+exports.orderController = orderController = __decorate([
+    (0, tsoa_1.Route)("order")
+], orderController);
