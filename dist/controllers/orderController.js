@@ -17,13 +17,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.orderController = void 0;
 const tsoa_1 = require("tsoa");
-const axios_1 = __importDefault(require("axios"));
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const token = "mTuXUjOm8dKhn805+2xOAOfDoq5NBEzYT9hx+DbF8IFCInIHLZbZ1orjdtyrCADJmsCfKzlJUNZF9kzRw24K9zrPj4tnkJkAAsYJtO0O1eGGWOMAVoB2J2B7R03I/tp+HFYRVVD09GEod/NiCukB4QdB04t89/1O/w1cDnyilFU=";
@@ -216,14 +212,27 @@ let orderController = class orderController extends tsoa_1.Controller {
                 ],
             };
             try {
-                const data_massage = yield axios_1.default.post("https://api.line.me/v2/bot/message/push", data, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
+                const orderData = yield prisma.order.findFirst({
+                    include: {
+                        orderDetail: true
                     },
+                    orderBy: {
+                        createDate: "desc"
+                    }
                 });
-                console.log("Message sent successfully:", data_massage.data);
-                return "Message sent successfully!";
+                return orderData;
+                //   const data_massage = await axios.post(
+                //   "https://api.line.me/v2/bot/message/push",
+                //   data,
+                //   {
+                //     headers: {
+                //       Authorization: `Bearer ${token}`,
+                //       "Content-Type": "application/json",
+                //     },
+                //   }
+                // );  
+                // console.log("Message sent successfully:", data_massage.data);
+                // return "Message sent successfully!";
             }
             catch (error) {
                 console.error("Error sending message:", error);
@@ -239,10 +248,22 @@ let orderController = class orderController extends tsoa_1.Controller {
     createOrder(req) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const data = yield prisma.order.create({
-                    data: Object.assign({}, req)
+                const dataOrder = yield prisma.order.create({
+                    data: {
+                        total: req.total,
+                        quantity: req.quantity
+                    }
                 });
-                return data;
+                const dataDetail = yield req.orderDetail.map((item) => {
+                    return Object.assign(Object.assign({}, item), { orderId: dataOrder.id });
+                });
+                const dataOrderDetail = yield prisma.orderDetail.createManyAndReturn({
+                    data: dataDetail
+                });
+                return {
+                    dataOrder,
+                    dataOrderDetail
+                };
             }
             catch (error) {
                 return error;

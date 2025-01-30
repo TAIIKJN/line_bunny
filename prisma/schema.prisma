@@ -29,7 +29,7 @@ model Product {
   categories   Categories @relation(fields: [categoriesId], references: [id])
   categoriesId String
 
-  OrderDetail OrderDetail[]
+  orderDetail OrderDetail[]
 }
 
 model Categories {
@@ -46,7 +46,7 @@ model Order {
   quantity   Int
   createDate DateTime? @default(now())
 
-  OrderDetail OrderDetail[]
+  orderDetail OrderDetail[]
 }
 
 model OrderDetail {

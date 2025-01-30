@@ -58,13 +58,24 @@ const models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "OrderData": {
+    "OrderDetailData": {
         "dataType": "refObject",
         "properties": {
             "total": { "dataType": "string", "required": true },
             "quantity": { "dataType": "double", "required": true },
             "state": { "dataType": "string", "required": true },
             "productId": { "dataType": "string", "required": true },
+            "orderId": { "dataType": "string" },
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "OrderData": {
+        "dataType": "refObject",
+        "properties": {
+            "total": { "dataType": "string", "required": true },
+            "quantity": { "dataType": "double", "required": true },
+            "orderDetail": { "dataType": "array", "array": { "dataType": "refObject", "ref": "OrderDetailData" }, "required": true },
         },
         "additionalProperties": false,
     },

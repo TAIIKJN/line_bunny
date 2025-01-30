@@ -7,16 +7,33 @@ const token =
   "mTuXUjOm8dKhn805+2xOAOfDoq5NBEzYT9hx+DbF8IFCInIHLZbZ1orjdtyrCADJmsCfKzlJUNZF9kzRw24K9zrPj4tnkJkAAsYJtO0O1eGGWOMAVoB2J2B7R03I/tp+HFYRVVD09GEod/NiCukB4QdB04t89/1O/w1cDnyilFU=";
 
 interface OrderData{
-  total:string
-  quantity:number
-  state:string
-  productId:string
+  total:string;
+  quantity:number;
+  orderDetail:OrderDetailData[];
+}
+
+interface OrderDetailData{
+  total:string;
+  quantity:number;
+  state:string;
+  productId:string;
+  orderId?:string;
 }
 
 @Route("order")
 export class orderController extends Controller {
   @Get()
   public async getOrderAll() {
+    try{
+    const orderData = await prisma.order.findFirst({
+      include:{
+        orderDetail:true
+      },
+      orderBy:{
+        createDate:"desc"
+      }
+    })
+
     const data = {
       to: "Uaf85ed5e769f298f7255a8f0f6f9ae6a",
       messages: [
@@ -42,7 +59,7 @@ export class orderController extends Controller {
                 {
                   type: "box",
                   layout: "vertical",
-                  contents:[
+                  contents: [
                     {
                       type:"text",
                       color:"#CC7722",
@@ -203,19 +220,19 @@ export class orderController extends Controller {
       ],
     };
 
-    try{
-      const data_massage = await axios.post(
-      "https://api.line.me/v2/bot/message/push",
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );  
-    console.log("Message sent successfully:", data_massage.data);
-    return "Message sent successfully!";
+    return orderData
+    //   const data_massage = await axios.post(
+    //   "https://api.line.me/v2/bot/message/push",
+    //   data,
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );  
+    // console.log("Message sent successfully:", data_massage.data);
+    // return "Message sent successfully!";
     }catch(error){
       console.error("Error sending message:", error);
       return "Failed to send message.";
@@ -229,13 +246,28 @@ export class orderController extends Controller {
   @Post()
   public async createOrder(@Body() req:OrderData){
     try{
-      const data = await prisma.order.create({
+      const dataOrder = await prisma.order.create({
         data:{
-          ...req
+          total:req.total,
+          quantity:req.quantity
         }
       })
 
-      return data
+      const dataDetail = await req.orderDetail.map((item)=>{
+        return {
+          ...item,
+          orderId:dataOrder.id
+        }
+      })
+
+      const dataOrderDetail = await prisma.orderDetail.createManyAndReturn({
+        data:dataDetail
+      })
+
+      return {
+        dataOrder,
+        dataOrderDetail
+      }
     }catch(error){
       return error
     }

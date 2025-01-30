@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Response, Route } from "tsoa";
+import { Body, Controller, Get, Post, Route } from "tsoa";
 import axios from "axios";
 import { PrismaClient } from "@prisma/client";
 

@@ -139,7 +139,7 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"OrderData": {
+			"OrderDetailData": {
 				"properties": {
 					"total": {
 						"type": "string"
@@ -153,6 +153,9 @@
 					},
 					"productId": {
 						"type": "string"
+					},
+					"orderId": {
+						"type": "string"
 					}
 				},
 				"required": [
@@ -160,6 +163,30 @@
 					"quantity",
 					"state",
 					"productId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"OrderData": {
+				"properties": {
+					"total": {
+						"type": "string"
+					},
+					"quantity": {
+						"type": "number",
+						"format": "double"
+					},
+					"orderDetail": {
+						"items": {
+							"$ref": "#/components/schemas/OrderDetailData"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"total",
+					"quantity",
+					"orderDetail"
 				],
 				"type": "object",
 				"additionalProperties": false
