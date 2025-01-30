@@ -20,6 +20,8 @@ const productController_1 = require("./controllers/productController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const orderController_1 = require("./controllers/orderController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+const categoriesController_1 = require("./controllers/categoriesController");
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const models = {
     "Record_string.any_": {
         "dataType": "refAlias",
@@ -51,6 +53,7 @@ const models = {
             "description": { "dataType": "string", "required": true },
             "price": { "dataType": "string", "required": true },
             "image": { "dataType": "string", "required": true },
+            "categoriesId": { "dataType": "string", "required": true },
         },
         "additionalProperties": false,
     },
@@ -59,9 +62,18 @@ const models = {
         "dataType": "refObject",
         "properties": {
             "total": { "dataType": "string", "required": true },
-            "Quantity": { "dataType": "double", "required": true },
-            "State": { "dataType": "string", "required": true },
+            "quantity": { "dataType": "double", "required": true },
+            "state": { "dataType": "string", "required": true },
             "productId": { "dataType": "string", "required": true },
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "CategoriesData": {
+        "dataType": "refObject",
+        "properties": {
+            "name": { "dataType": "string", "required": true },
+            "description": { "dataType": "string", "required": true },
         },
         "additionalProperties": false,
     },
@@ -301,6 +313,77 @@ function RegisterRoutes(app) {
                 const controller = new orderController_1.orderController();
                 yield templateService.apiHandler({
                     methodName: 'createOrder',
+                    controller,
+                    response,
+                    next,
+                    validatedArgs,
+                    successStatus: undefined,
+                });
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    const argscategoriesController_getCategoriesAll = {};
+    app.get('/api/categories', ...((0, runtime_1.fetchMiddlewares)(categoriesController_1.categoriesController)), ...((0, runtime_1.fetchMiddlewares)(categoriesController_1.categoriesController.prototype.getCategoriesAll)), function categoriesController_getCategoriesAll(request, response, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+            let validatedArgs = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argscategoriesController_getCategoriesAll, request, response });
+                const controller = new categoriesController_1.categoriesController();
+                yield templateService.apiHandler({
+                    methodName: 'getCategoriesAll',
+                    controller,
+                    response,
+                    next,
+                    validatedArgs,
+                    successStatus: undefined,
+                });
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    const argscategoriesController_getCategoriesById = {};
+    app.get('/api/categories/:id', ...((0, runtime_1.fetchMiddlewares)(categoriesController_1.categoriesController)), ...((0, runtime_1.fetchMiddlewares)(categoriesController_1.categoriesController.prototype.getCategoriesById)), function categoriesController_getCategoriesById(request, response, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+            let validatedArgs = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argscategoriesController_getCategoriesById, request, response });
+                const controller = new categoriesController_1.categoriesController();
+                yield templateService.apiHandler({
+                    methodName: 'getCategoriesById',
+                    controller,
+                    response,
+                    next,
+                    validatedArgs,
+                    successStatus: undefined,
+                });
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    const argscategoriesController_createCategories = {
+        req: { "in": "body", "name": "req", "required": true, "ref": "CategoriesData" },
+    };
+    app.post('/api/categories', ...((0, runtime_1.fetchMiddlewares)(categoriesController_1.categoriesController)), ...((0, runtime_1.fetchMiddlewares)(categoriesController_1.categoriesController.prototype.createCategories)), function categoriesController_createCategories(request, response, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+            let validatedArgs = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argscategoriesController_createCategories, request, response });
+                const controller = new categoriesController_1.categoriesController();
+                yield templateService.apiHandler({
+                    methodName: 'createCategories',
                     controller,
                     response,
                     next,

@@ -10,7 +10,8 @@ interface ProductData{
   name:string;
   description:string;
   price:string;
-  image:string
+  image:string;
+  categoriesId:string;
 }
 
 @Route("product")

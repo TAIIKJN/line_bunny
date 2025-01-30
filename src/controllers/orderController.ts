@@ -8,8 +8,8 @@ const token =
 
 interface OrderData{
   total:string
-  Quantity:number
-  State:string
+  quantity:number
+  state:string
   productId:string
 }
 

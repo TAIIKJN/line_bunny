@@ -124,13 +124,17 @@
 					},
 					"image": {
 						"type": "string"
+					},
+					"categoriesId": {
+						"type": "string"
 					}
 				},
 				"required": [
 					"name",
 					"description",
 					"price",
-					"image"
+					"image",
+					"categoriesId"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -140,11 +144,11 @@
 					"total": {
 						"type": "string"
 					},
-					"Quantity": {
+					"quantity": {
 						"type": "number",
 						"format": "double"
 					},
-					"State": {
+					"state": {
 						"type": "string"
 					},
 					"productId": {
@@ -153,9 +157,25 @@
 				},
 				"required": [
 					"total",
-					"Quantity",
-					"State",
+					"quantity",
+					"state",
 					"productId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CategoriesData": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"description"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -406,6 +426,67 @@
 		"/order/{id}": {
 			"get": {
 				"operationId": "GetOrderById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/categories": {
+			"get": {
+				"operationId": "GetCategoriesAll",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateCategories",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CategoriesData"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/categories/{id}": {
+			"get": {
+				"operationId": "GetCategoriesById",
 				"responses": {
 					"200": {
 						"description": "Ok",
