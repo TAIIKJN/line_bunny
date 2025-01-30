@@ -1,8 +1,17 @@
 import { Body, Controller, Get, Post, Response, Route } from "tsoa";
 import axios from "axios";
+import { PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient()
 const token =
   "mTuXUjOm8dKhn805+2xOAOfDoq5NBEzYT9hx+DbF8IFCInIHLZbZ1orjdtyrCADJmsCfKzlJUNZF9kzRw24K9zrPj4tnkJkAAsYJtO0O1eGGWOMAVoB2J2B7R03I/tp+HFYRVVD09GEod/NiCukB4QdB04t89/1O/w1cDnyilFU=";
+
+interface ProductData{
+  name:string;
+  description:string;
+  price:string;
+  image:string
+}
 
 @Route("product")
 export class productController extends Controller {
@@ -216,5 +225,19 @@ export class productController extends Controller {
   @Get("{id}")
   public async getProductById() {
     return "hiiii get by ID";
+  }
+  @Post()
+  public async createProduct(@Body() req:ProductData){
+    try{
+      const data = await prisma.product.create({
+        data:{
+          ...req
+        }
+      })
+
+      return data
+    }catch(error){
+      return error
+    }
   }
 }
