@@ -17,222 +17,295 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.orderController = void 0;
 const tsoa_1 = require("tsoa");
+const axios_1 = __importDefault(require("axios"));
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const token = "mTuXUjOm8dKhn805+2xOAOfDoq5NBEzYT9hx+DbF8IFCInIHLZbZ1orjdtyrCADJmsCfKzlJUNZF9kzRw24K9zrPj4tnkJkAAsYJtO0O1eGGWOMAVoB2J2B7R03I/tp+HFYRVVD09GEod/NiCukB4QdB04t89/1O/w1cDnyilFU=";
 let orderController = class orderController extends tsoa_1.Controller {
     getOrderAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            const data = {
-                to: "Uaf85ed5e769f298f7255a8f0f6f9ae6a",
-                messages: [
-                    {
-                        type: "flex",
-                        altText: "🏷 Order status for you 🍞",
-                        contents: {
-                            type: "bubble",
-                            header: {
-                                type: "box",
-                                layout: "vertical",
-                                contents: [
-                                    {
-                                        type: "text",
-                                        text: "🏷 Order status for you 🍞"
-                                    }
-                                ]
-                            },
-                            body: {
-                                type: "box",
-                                layout: "vertical",
-                                contents: [
-                                    {
-                                        type: "box",
-                                        layout: "vertical",
-                                        contents: [
-                                            {
-                                                type: "text",
-                                                color: "#CC7722",
-                                                text: "⏳ Pending(รอดำเนินการ)"
-                                            },
-                                            {
-                                                type: "box",
-                                                layout: "horizontal",
-                                                contents: [
-                                                    {
-                                                        type: "separator",
-                                                        margin: "xxl",
-                                                        color: "#9E9E9E"
-                                                    },
-                                                    {
-                                                        type: "text",
-                                                        text: "Matcha Green Tea Latte",
-                                                        adjustMode: "shrink-to-fit",
-                                                        offsetStart: "10px"
-                                                    },
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        type: "box",
-                                        layout: "vertical",
-                                        contents: [
-                                            {
-                                                type: "text",
-                                                color: "#FF9F50",
-                                                text: "👨‍🍳 Preparing(กำลังเตรียม)"
-                                            },
-                                            {
-                                                type: "box",
-                                                layout: "horizontal",
-                                                contents: [
-                                                    {
-                                                        type: "separator",
-                                                        margin: "xxl",
-                                                        color: "#9E9E9E"
-                                                    },
-                                                    {
-                                                        type: "text",
-                                                        text: "Classic Hot Cocoa",
-                                                        adjustMode: "shrink-to-fit",
-                                                        offsetStart: "10px"
-                                                    },
-                                                ]
-                                            },
-                                            {
-                                                type: "box",
-                                                layout: "horizontal",
-                                                contents: [
-                                                    {
-                                                        type: "separator",
-                                                        margin: "xxl",
-                                                        color: "#9E9E9E"
-                                                    },
-                                                    {
-                                                        type: "text",
-                                                        text: "Caramel Cocoa",
-                                                        adjustMode: "shrink-to-fit",
-                                                        offsetStart: "10px"
-                                                    },
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        type: "box",
-                                        layout: "vertical",
-                                        contents: [
-                                            {
-                                                type: "text",
-                                                color: "#008080",
-                                                text: "🛎️ Ready to Serve(พร้อมเสิร์ฟ)"
-                                            },
-                                            {
-                                                type: "box",
-                                                layout: "horizontal",
-                                                contents: [
-                                                    {
-                                                        type: "separator",
-                                                        margin: "xxl",
-                                                        color: "#9E9E9E"
-                                                    },
-                                                    {
-                                                        type: "text",
-                                                        text: "Chocolate Fudge Cake",
-                                                        adjustMode: "shrink-to-fit",
-                                                        offsetStart: "10px"
-                                                    },
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        type: "box",
-                                        layout: "vertical",
-                                        contents: [
-                                            {
-                                                type: "text",
-                                                color: "#1E90FF",
-                                                text: "✔️ Served(เสิร์ฟแล้ว)"
-                                            },
-                                            {
-                                                type: "box",
-                                                layout: "horizontal",
-                                                contents: [
-                                                    {
-                                                        type: "separator",
-                                                        margin: "xxl",
-                                                        color: "#9E9E9E"
-                                                    },
-                                                    {
-                                                        type: "text",
-                                                        text: "Red Velvet Cake",
-                                                        adjustMode: "shrink-to-fit",
-                                                        offsetStart: "10px"
-                                                    },
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        type: "box",
-                                        layout: "vertical",
-                                        contents: [
-                                            {
-                                                type: "text",
-                                                color: "#E30B5C",
-                                                text: "❌ Canceled(ยกเลิก)"
-                                            },
-                                            {
-                                                type: "box",
-                                                layout: "horizontal",
-                                                contents: [
-                                                    {
-                                                        type: "separator",
-                                                        margin: "xxl",
-                                                        color: "#9E9E9E"
-                                                    },
-                                                    {
-                                                        type: "text",
-                                                        text: "Banoffee Pie",
-                                                        adjustMode: "shrink-to-fit",
-                                                        offsetStart: "10px"
-                                                    },
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                        }
-                    },
-                ],
-            };
             try {
                 const orderData = yield prisma.order.findFirst({
                     include: {
-                        orderDetail: true
+                        orderDetail: {
+                            include: {
+                                product: true
+                            }
+                        },
                     },
                     orderBy: {
-                        createDate: "desc"
-                    }
+                        createDate: "desc",
+                    },
                 });
-                return orderData;
-                //   const data_massage = await axios.post(
-                //   "https://api.line.me/v2/bot/message/push",
-                //   data,
-                //   {
-                //     headers: {
-                //       Authorization: `Bearer ${token}`,
-                //       "Content-Type": "application/json",
-                //     },
-                //   }
-                // );  
-                // console.log("Message sent successfully:", data_massage.data);
-                // return "Message sent successfully!";
+                const data = {
+                    to: "Uaf85ed5e769f298f7255a8f0f6f9ae6a",
+                    messages: [
+                        {
+                            type: "flex",
+                            altText: "🏷 Order status for you 🍞",
+                            contents: {
+                                type: "bubble",
+                                header: {
+                                    type: "box",
+                                    layout: "vertical",
+                                    contents: [
+                                        {
+                                            type: "text",
+                                            text: "🏷 Order status for you 🍞",
+                                            align: "center"
+                                        },
+                                    ],
+                                },
+                                body: {
+                                    type: "box",
+                                    layout: "vertical",
+                                    contents: [
+                                        {
+                                            type: "box",
+                                            layout: "vertical",
+                                            contents: [
+                                                {
+                                                    type: "text",
+                                                    color: "#CC7722",
+                                                    text: "⏳ Pending(รอดำเนินการ)",
+                                                    offsetBottom: "2px"
+                                                },
+                                                {
+                                                    type: "box",
+                                                    layout: "vertical",
+                                                    contents: orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail.filter(data => data.state === 'pending').map(item => ([
+                                                        {
+                                                            type: "box",
+                                                            layout: "horizontal",
+                                                            contents: [
+                                                                {
+                                                                    type: "separator",
+                                                                    margin: "xxl",
+                                                                    color: "#9E9E9E",
+                                                                },
+                                                                {
+                                                                    type: "text",
+                                                                    text: item.product.name,
+                                                                    adjustMode: "shrink-to-fit",
+                                                                    offsetStart: "10px",
+                                                                },
+                                                            ].flat()
+                                                        }
+                                                    ])).flat()
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            type: "box",
+                                            layout: "vertical",
+                                            contents: [
+                                                {
+                                                    type: "text",
+                                                    color: "#FF9F50",
+                                                    text: "👨‍🍳 Preparing(กำลังเตรียม)",
+                                                    offsetBottom: "2px"
+                                                },
+                                                {
+                                                    type: "box",
+                                                    layout: "vertical",
+                                                    contents: orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail.filter(data => data.state === 'preparing').map(item => ([
+                                                        {
+                                                            type: "box",
+                                                            layout: "horizontal",
+                                                            contents: [
+                                                                {
+                                                                    type: "separator",
+                                                                    margin: "xxl",
+                                                                    color: "#9E9E9E",
+                                                                },
+                                                                {
+                                                                    type: "text",
+                                                                    text: item.product.name,
+                                                                    adjustMode: "shrink-to-fit",
+                                                                    offsetStart: "10px",
+                                                                },
+                                                            ].flat()
+                                                        }
+                                                    ])).flat(),
+                                                },
+                                            ]
+                                        },
+                                        {
+                                            type: "box",
+                                            layout: "vertical",
+                                            contents: [
+                                                {
+                                                    type: "text",
+                                                    color: "#008080",
+                                                    text: "🛎️ Ready to Serve(พร้อมเสิร์ฟ)",
+                                                    offsetBottom: "2px",
+                                                },
+                                                {
+                                                    type: "box",
+                                                    layout: "horizontal",
+                                                    contents: orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail.filter(data => data.state === 'readyToServe').map(item => ([
+                                                        {
+                                                            type: "box",
+                                                            layout: "horizontal",
+                                                            contents: [
+                                                                {
+                                                                    type: "separator",
+                                                                    margin: "xxl",
+                                                                    color: "#9E9E9E",
+                                                                },
+                                                                {
+                                                                    type: "text",
+                                                                    text: item.product.name,
+                                                                    adjustMode: "shrink-to-fit",
+                                                                    offsetStart: "10px",
+                                                                },
+                                                            ].flat()
+                                                        }
+                                                    ])).flat()
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            type: "box",
+                                            layout: "vertical",
+                                            contents: [
+                                                {
+                                                    type: "text",
+                                                    color: "#1E90FF",
+                                                    text: "✔️ Served(เสิร์ฟแล้ว)",
+                                                    offsetBottom: "2px",
+                                                },
+                                                {
+                                                    type: "box",
+                                                    layout: "vertical",
+                                                    contents: orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail.filter(data => data.state === 'served').map(item => ([
+                                                        {
+                                                            type: "box",
+                                                            layout: "horizontal",
+                                                            contents: [
+                                                                {
+                                                                    type: "separator",
+                                                                    margin: "xxl",
+                                                                    color: "#9E9E9E",
+                                                                },
+                                                                {
+                                                                    type: "text",
+                                                                    text: item.product.name,
+                                                                    adjustMode: "shrink-to-fit",
+                                                                    offsetStart: "10px",
+                                                                },
+                                                            ].flat()
+                                                        }
+                                                    ])).flat(),
+                                                },
+                                            ]
+                                        },
+                                        {
+                                            type: "box",
+                                            layout: "vertical",
+                                            contents: [
+                                                {
+                                                    type: "text",
+                                                    color: "#E30B5C",
+                                                    text: "❌ Canceled(ยกเลิก)",
+                                                    offsetBottom: "2px",
+                                                },
+                                            ]
+                                        },
+                                        {
+                                            type: "box",
+                                            layout: "horizontal",
+                                            contents: orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail.filter(data => data.state === 'canceled').map(item => ([
+                                                {
+                                                    type: "box",
+                                                    layout: "horizontal",
+                                                    contents: [
+                                                        {
+                                                            type: "separator",
+                                                            margin: "xxl",
+                                                            color: "#9E9E9E",
+                                                        },
+                                                        {
+                                                            type: "text",
+                                                            text: item.product.name,
+                                                            adjustMode: "shrink-to-fit",
+                                                            offsetStart: "10px",
+                                                        },
+                                                    ].flat()
+                                                }
+                                            ])).flat(),
+                                        },
+                                    ],
+                                },
+                                footer: {
+                                    type: "box",
+                                    layout: "vertical",
+                                    contents: [
+                                        {
+                                            type: "text",
+                                            text: "🍰 ------------------------------ 🍰",
+                                            align: "center",
+                                            offsetBottom: "2px",
+                                        },
+                                        {
+                                            type: "box",
+                                            layout: "horizontal",
+                                            offsetBottom: "2px",
+                                            contents: [
+                                                {
+                                                    type: "text",
+                                                    size: "sm",
+                                                    text: "Grand Total ",
+                                                    align: "start"
+                                                },
+                                                {
+                                                    type: "text",
+                                                    size: "sm",
+                                                    text: `${orderData === null || orderData === void 0 ? void 0 : orderData.quantity} items`,
+                                                    align: "end"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            type: "box",
+                                            layout: "horizontal",
+                                            offsetBottom: "2px",
+                                            contents: [
+                                                {
+                                                    type: "text",
+                                                    size: "sm",
+                                                    text: "💰 Total",
+                                                    align: "start"
+                                                },
+                                                {
+                                                    type: "text",
+                                                    size: "sm",
+                                                    text: `${orderData === null || orderData === void 0 ? void 0 : orderData.total} THB`,
+                                                    align: "end"
+                                                }
+                                            ]
+                                        },
+                                    ]
+                                }
+                            },
+                        },
+                    ],
+                };
+                console.log(JSON.stringify(data));
+                const data_massage = yield axios_1.default.post("https://api.line.me/v2/bot/message/push", data, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                });
+                console.log("Message sent successfully:", data_massage.data);
+                return "Message sent successfully!";
             }
             catch (error) {
                 console.error("Error sending message:", error);
@@ -251,18 +324,18 @@ let orderController = class orderController extends tsoa_1.Controller {
                 const dataOrder = yield prisma.order.create({
                     data: {
                         total: req.total,
-                        quantity: req.quantity
-                    }
+                        quantity: req.quantity,
+                    },
                 });
                 const dataDetail = yield req.orderDetail.map((item) => {
                     return Object.assign(Object.assign({}, item), { orderId: dataOrder.id });
                 });
                 const dataOrderDetail = yield prisma.orderDetail.createManyAndReturn({
-                    data: dataDetail
+                    data: dataDetail,
                 });
                 return {
                     dataOrder,
-                    dataOrderDetail
+                    dataOrderDetail,
                 };
             }
             catch (error) {

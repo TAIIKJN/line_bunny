@@ -25,242 +25,394 @@ export class orderController extends Controller {
   @Get()
   public async getOrderAll() {
     try {
-      const orderData = await prisma.order.findFirst({
-        include: {
-          orderDetail: true,
+    const orderData = await prisma.order.findFirst({
+      include: {
+        orderDetail: {
+          include:{
+            product:true
+          }
         },
-        orderBy: {
-          createDate: "desc",
-        },
-      });
-
-      const data = {
-        to: "Uaf85ed5e769f298f7255a8f0f6f9ae6a",
-        messages: [
-          {
-            type: "flex",
-            altText: "🏷 Order status for you 🍞",
-            contents: {
-              type: "bubble",
-              header: {
-                type: "box",
-                layout: "vertical",
-                contents: [
-                  {
-                    type: "text",
-                    text: "🏷 Order status for you 🍞",
-                  },
-                ],
-              },
-              body: {
-                type: "box",
-                layout: "vertical",
-                contents: orderData?.orderDetail.map((item) => ({
+      },
+      orderBy: {
+        createDate: "desc",
+      },
+    });
+    
+    const data = {
+      to: "Uaf85ed5e769f298f7255a8f0f6f9ae6a",
+      messages: [
+        {
+          type: "flex",
+          altText: "🏷 Order status for you 🍞",
+          contents: {
+            type: "bubble",
+            header: {
+              type: "box",
+              layout: "vertical",
+              contents: [
+                {
+                  type: "text",
+                  text: "🏷 Order status for you 🍞",
+                  align: "center",
+                   weight: "bold",
+                },
+              ],
+            },
+            body: {
+              type: "box",
+              layout: "vertical",
+              contents: [
+                {
                   type: "box",
                   layout: "vertical",
-                  contents: [
+                  margin: "10px",
+                  contents: (orderData?.orderDetail ?? [])
+                  .filter(data => data.state === 'pending').length > 0 ? [
                     {
                       type: "text",
                       color: "#CC7722",
                       text: "⏳ Pending(รอดำเนินการ)",
+                      offsetBottom: "2px"
+                    },
+                    {
+                      type: "box",
+                      layout: "vertical",
+                      contents: orderData?.orderDetail
+                      .filter(data => data.state === 'pending')
+                      .map(item=>([
+                        {
+                          type: "box",
+                          layout: "vertical",
+                          contents:[
+                            {
+                              type: "text",
+                              text: item.product.name,
+                              wrap: true
+                            },
+                            {
+                              type: "box",
+                              layout: "horizontal",
+                              contents:[
+                                {
+                                  type: "text",
+                                  text: `x ${item.quantity}`,
+                                  color: "#C0C0C0",
+                                  align: "end",
+                                },
+                                {
+                                  type: "text",
+                                  text: `${item.total} THB`,
+                                  color: "#C0C0C0",
+                                  align: "end",
+                                },
+                              ]
+                            }
+                          ].flat()
+                        },
+                      ])).flat()       
+                    },
+                  ] : []
+                },
+                {
+                  type: "box",
+                  layout: "vertical",
+                  margin: "10px",
+                  contents: (orderData?.orderDetail ?? [])
+                  .filter(data => data.state === 'preparing').length > 0 ? [
+                    {
+                      type: "text",
+                      color: "#FF9F50",
+                      text: "👨‍🍳 Preparing(กำลังเตรียม)",
+                      offsetBottom: "2px"
+                    },
+                    {
+                      type: "box",
+                      layout: "vertical",
+                      contents: orderData?.orderDetail
+                      .filter(data=>data.state==='preparing')
+                      .map(item=>([
+                        {
+                          type: "box",
+                          layout: "vertical",
+                          contents: [
+                            {
+                              type: "text",
+                              text: item.product.name,
+                              wrap: true
+                            },
+                            {
+                              type: "box",
+                              layout: "horizontal",
+                              contents:[
+                                {
+                                  type: "text",
+                                  text: `x ${item.quantity}`,
+                                  color: "#C0C0C0",
+                                  align: "end",
+                                },
+                                {
+                                  type: "text",
+                                  text: `${item.total} THB`,
+                                  color: "#C0C0C0",
+                                  align: "end",
+                                },
+                              ]
+                            }
+                          ].flat()
+                        }                      
+                      ])).flat(),
+                    },
+                  ] : []
+                },       
+                {
+                  type: "box",
+                  layout: "vertical",
+                  margin: "10px",
+                  contents: (orderData?.orderDetail ?? [])
+                  .filter(data => data.state === 'readyToServe').length > 0 ? [
+                    {
+                      type: "text",
+                      color: "#008080",
+                      text: "🛎️ Ready to Serve(พร้อมเสิร์ฟ)",
+                      offsetBottom: "2px",
                     },
                     {
                       type: "box",
                       layout: "horizontal",
-                      contents: [
+                      contents: orderData?.orderDetail
+                      .filter(data=>data.state==='readyToServe')
+                      .map(item=>([
                         {
-                          type: "separator",
-                          margin: "xxl",
-                          color: "#9E9E9E",
-                        },
-                        {
-                          type: "text",
-                          text: "Matcha Green Tea Latte",
-                          adjustMode: "shrink-to-fit",
-                          offsetStart: "10px",
-                        },
-                      ],
+                          type: "box",
+                          layout: "vertical",
+                          contents: [
+                            {
+                              type: "text",
+                              text: item.product.name,
+                              wrap: true
+                            },
+                            {
+                              type: "box",
+                              layout: "horizontal",
+                              contents:[
+                                {
+                                  type: "text",
+                                  text: `x ${item.quantity}`,
+                                  color: "#C0C0C0",
+                                  align: "end",
+                                },
+                                {
+                                  type: "text",
+                                  text: `${item.total} THB`,
+                                  color: "#C0C0C0",
+                                  align: "end",
+                                },
+                              ]
+                            }
+                          ].flat()
+                        }   
+                      ])).flat()
                     },
-                  ],
-                })),
-                // [
-                //   {
-                //     type: "box",
-                //     layout: "vertical",
-                //     contents: [
-                //       {
-                //         type: "text",
-                //         color: "#CC7722",
-                //         text: "⏳ Pending(รอดำเนินการ)",
-                //       },
-                //       {
-                //         type: "box",
-                //         layout: "horizontal",
-                //         contents: [
-                //           {
-                //             type: "separator",
-                //             margin: "xxl",
-                //             color: "#9E9E9E",
-                //           },
-                //           {
-                //             type: "text",
-                //             text: "Matcha Green Tea Latte",
-                //             adjustMode: "shrink-to-fit",
-                //             offsetStart: "10px",
-                //           },
-                //         ],
-                //       },
-                //     ],
-                //   },
-                //   {
-                //     type: "box",
-                //     layout: "vertical",
-                //     contents: [
-                //       {
-                //         type: "text",
-                //         color: "#FF9F50",
-                //         text: "👨‍🍳 Preparing(กำลังเตรียม)",
-                //       },
-                //       {
-                //         type: "box",
-                //         layout: "horizontal",
-                //         contents: [
-                //           {
-                //             type: "separator",
-                //             margin: "xxl",
-                //             color: "#9E9E9E",
-                //           },
-                //           {
-                //             type: "text",
-                //             text: "Classic Hot Cocoa",
-                //             adjustMode: "shrink-to-fit",
-                //             offsetStart: "10px",
-                //           },
-                //         ],
-                //       },
-                //       {
-                //         type: "box",
-                //         layout: "horizontal",
-                //         contents: [
-                //           {
-                //             type: "separator",
-                //             margin: "xxl",
-                //             color: "#9E9E9E",
-                //           },
-                //           {
-                //             type: "text",
-                //             text: "Caramel Cocoa",
-                //             adjustMode: "shrink-to-fit",
-                //             offsetStart: "10px",
-                //           },
-                //         ],
-                //       },
-                //     ],
-                //   },
-                //   {
-                //     type: "box",
-                //     layout: "vertical",
-                //     contents: [
-                //       {
-                //         type: "text",
-                //         color: "#008080",
-                //         text: "🛎️ Ready to Serve(พร้อมเสิร์ฟ)",
-                //       },
-                //       {
-                //         type: "box",
-                //         layout: "horizontal",
-                //         contents: [
-                //           {
-                //             type: "separator",
-                //             margin: "xxl",
-                //             color: "#9E9E9E",
-                //           },
-                //           {
-                //             type: "text",
-                //             text: "Chocolate Fudge Cake",
-                //             adjustMode: "shrink-to-fit",
-                //             offsetStart: "10px",
-                //           },
-                //         ],
-                //       },
-                //     ],
-                //   },
-                //   {
-                //     type: "box",
-                //     layout: "vertical",
-                //     contents: [
-                //       {
-                //         type: "text",
-                //         color: "#1E90FF",
-                //         text: "✔️ Served(เสิร์ฟแล้ว)",
-                //       },
-                //       {
-                //         type: "box",
-                //         layout: "horizontal",
-                //         contents: [
-                //           {
-                //             type: "separator",
-                //             margin: "xxl",
-                //             color: "#9E9E9E",
-                //           },
-                //           {
-                //             type: "text",
-                //             text: "Red Velvet Cake",
-                //             adjustMode: "shrink-to-fit",
-                //             offsetStart: "10px",
-                //           },
-                //         ],
-                //       },
-                //     ],
-                //   },
-                //   {
-                //     type: "box",
-                //     layout: "vertical",
-                //     contents: [
-                //       {
-                //         type: "text",
-                //         color: "#E30B5C",
-                //         text: "❌ Canceled(ยกเลิก)",
-                //       },
-                //       {
-                //         type: "box",
-                //         layout: "horizontal",
-                //         contents: [
-                //           {
-                //             type: "separator",
-                //             margin: "xxl",
-                //             color: "#9E9E9E",
-                //           },
-                //           {
-                //             type: "text",
-                //             text: "Banoffee Pie",
-                //             adjustMode: "shrink-to-fit",
-                //             offsetStart: "10px",
-                //           },
-                //         ],
-                //       },
-                //     ],
-                //   },
-                // ],
-              },
+                  ] : [],
+                },            
+                {
+                  type: "box",
+                  layout: "vertical",
+                  margin: "10px",
+                  contents: (orderData?.orderDetail ?? [])
+                  .filter(data => data.state === 'served').length > 0 ? [
+                    {
+                      type: "text",
+                      color: "#1E90FF",
+                      text: "✔️ Served(เสิร์ฟแล้ว)",
+                      offsetBottom: "2px",
+                    },
+                    {
+                      type: "box",
+                      layout: "vertical",
+                      contents: orderData?.orderDetail
+                      .filter(data=>data.state==='served')
+                      .map(item=>([
+                        {
+                          type: "box",
+                          layout: "vertical",
+                          contents: [
+                            {
+                              type: "text",
+                              text: item.product.name,
+                              wrap: true
+                            },
+                            {
+                              type: "box",
+                              layout: "horizontal",
+                              contents:[
+                                {
+                                  type: "text",
+                                  text: `x ${item.quantity}`,
+                                  color: "#C0C0C0",
+                                  align: "end",
+                                },
+                                {
+                                  type: "text",
+                                  text: `${item.total} THB`,
+                                  color: "#C0C0C0",
+                                  align: "end",
+                                },
+                              ]
+                            }
+                          ].flat()
+                        }                                          
+                      ])).flat(),
+                    },
+                  ] : []
+                },              
+                {
+                  type: "box",
+                  layout: "vertical",
+                  margin: "10px",
+                  contents: (orderData?.orderDetail ?? [])
+                  .filter(data => data.state === 'canceled').length > 0 ? [
+                    {
+                      type: "text",
+                      color: "#E30B5C",
+                      text: "❌ Canceled(ยกเลิก)",
+                      offsetBottom: "2px",
+                    },
+                    {
+                      type: "box",
+                      layout: "horizontal",
+                      contents: orderData?.orderDetail
+                      .filter(data=>data.state==='canceled')
+                      .map(item=>([
+                        {
+                          type: "box",
+                          layout: "vertical",
+                          contents: [
+                            {
+                              type: "text",
+                              text: item.product.name,
+                              wrap: true
+                            }, 
+                            {
+                              type: "box",
+                              layout: "horizontal",
+                              contents:[
+                                {
+                                  type: "text",
+                                  text: `x ${item.quantity}`,
+                                  color: "#C0C0C0",
+                                  align: "end",
+                                },
+                                {
+                                  type: "text",
+                                  text: `${item.total} THB`,
+                                  color: "#C0C0C0",
+                                  align: "end",
+                                },
+                              ]
+                            }
+                          ].flat()
+                        }
+                      ])).flat(),
+                    },   
+                  ] : []
+                }         
+              ],
             },
+            footer: {
+              type: "box",
+              layout: "vertical",
+              margin: "10px",
+              contents: [
+                {
+                  type: "text",
+                  text: " ------------------------------ ",
+                  align: "center",
+                  offsetBottom: "2px",
+                },
+                {
+                  type: "box",
+                  layout: "horizontal",
+                  offsetBottom: "2px",
+                  contents:[
+                    {
+                      type: "text",
+                      size: "sm",
+                      text: "Grand Total ",
+                      align: "start"
+                    },
+                    {
+                      type:"text",
+                      size : "sm",
+                      text: `${orderData?.quantity} items`,
+                      align: "end"
+                    }
+                  ]
+                },
+                {
+                  type: "box",
+                  layout: "horizontal",
+                  margin: "10px",
+                  contents:[
+                    {
+                      type: "text",
+                      size: "sm",
+                      text: "💰 Total",
+                      align: "start"
+                    },
+                    {
+                      type:"text",
+                      size : "sm",
+                      text: `${orderData?.total} THB`,
+                      align: "end"
+                    }
+                  ]
+                },
+                {
+                  type: "text",
+                  text: " ------------------------------ ",
+                  align: "center",
+                  offsetBottom: "2px",
+                },
+                {
+                  type: "text",
+                  text: "🙏 Thank you for your order",
+                  offsetBottom: "2px",
+                  wrap: true
+                },
+                {
+                  type: "text",
+                  text: "😊 We hope to serve you again soon.",
+                  offsetBottom: "2px",
+                  wrap: true
+                },
+                {
+                  type: "text",
+                  text: "🍰 Enjoy your food and drinks",
+                  offsetBottom: "2px",
+                  wrap: true
+                },
+              ]
+            }
           },
-        ],
-      };
+        },
+      ],
+    };
 
-      return orderData;
-      //   const data_massage = await axios.post(
-      //   "https://api.line.me/v2/bot/message/push",
-      //   data,
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //       "Content-Type": "application/json",
-      //     },
-      //   }
-      // );
-      // console.log("Message sent successfully:", data_massage.data);
-      // return "Message sent successfully!";
+console.log(JSON.stringify(data));
+
+      const data_massage = await axios.post(
+        "https://api.line.me/v2/bot/message/push",
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Message sent successfully:", data_massage.data);
+      return "Message sent successfully!";
     } catch (error) {
       console.error("Error sending message:", error);
       return "Failed to send message.";

@@ -18,193 +18,95 @@ interface ProductData{
 export class productController extends Controller {
   @Get()
   public async getProductAll() {
-    const data = {
-      to: "Uaf85ed5e769f298f7255a8f0f6f9ae6a",
-      messages: [
-        {
-          type: "flex",
-          altText:"🏷 Order status for you 🍞",
-          contents:{
-            type: "bubble",
-            header:{
-              type:"box",
-              layout:"vertical",
-              contents:[
-                {
-                  type:"text",
-                  text:"🏷 Order status for you 🍞"
-                }
-              ]
-            },
-            body:{
-              type:"box",
-              layout:"vertical",
-              contents:[
-                {
-                  type: "box",
-                  layout: "vertical",
-                  contents:[
-                    {
-                      type:"text",
-                      color:"#CC7722",
-                      text:"⏳ Pending(รอดำเนินการ)"
-                    },
-                    {
-                      type:"box",
-                      layout:"horizontal",
-                      contents:[
-                        {
-                          type: "separator",
-                          margin:"xxl",
-                          color: "#9E9E9E"
-                        },
-                        {
-                          type:"text",
-                          text:"Matcha Green Tea Latte",
-                          adjustMode:"shrink-to-fit",
-                          offsetStart:"10px"
-                        },
-                      ]
-                    }
-                  ]
-                },
-                {
-                  type: "box",
-                  layout: "vertical",
-                  contents:[
-                    {
-                      type:"text",
-                      color:"#FF9F50",
-                      text:"👨‍🍳 Preparing(กำลังเตรียม)"
-                    },
-                    {
-                      type:"box",
-                      layout:"horizontal",
-                      contents:[
-                        {
-                          type: "separator",
-                          margin:"xxl",
-                          color: "#9E9E9E"
-                        },
-                        {
-                          type:"text",
-                          text:"Classic Hot Cocoa",
-                          adjustMode:"shrink-to-fit",
-                          offsetStart:"10px"
-                        },
-                      ]
-                    },
-                    {
-                      type:"box",
-                      layout:"horizontal",
-                      contents:[
-                        {
-                          type: "separator",
-                          margin:"xxl",
-                          color: "#9E9E9E"
-                        },
-                        {
-                          type:"text",
-                          text:"Caramel Cocoa",
-                          adjustMode:"shrink-to-fit",
-                          offsetStart:"10px"
-                        },
-                      ]
-                    }
-                  ]
-                },
-                {
-                  type: "box",
-                  layout: "vertical",
-                  contents:[
-                    {
-                      type:"text",
-                      color:"#008080",
-                      text:"🛎️ Ready to Serve(พร้อมเสิร์ฟ)"
-                    },
-                    {
-                      type:"box",
-                      layout:"horizontal",
-                      contents:[
-                        {
-                          type: "separator",
-                          margin:"xxl",
-                          color: "#9E9E9E"
-                        },
-                        {
-                          type:"text",
-                          text:"Chocolate Fudge Cake",
-                          adjustMode:"shrink-to-fit",
-                          offsetStart:"10px"
-                        },
-                      ]
-                    }
-                  ]
-                },
-                {
-                  type: "box",
-                  layout: "vertical",
-                  contents:[
-                    {
-                      type:"text",
-                      color:"#1E90FF",
-                      text:"✔️ Served(เสิร์ฟแล้ว)"
-                    },
-                    {
-                      type:"box",
-                      layout:"horizontal",
-                      contents:[
-                        {
-                          type: "separator",
-                          margin:"xxl",
-                          color: "#9E9E9E"
-                        },
-                        {
-                          type:"text",
-                          text:"Red Velvet Cake",
-                          adjustMode:"shrink-to-fit",
-                          offsetStart:"10px"
-                        },
-                      ]
-                    }
-                  ]
-                },
-                {
-                  type: "box",
-                  layout: "vertical",
-                  contents:[
-                    {
-                      type:"text",
-                      color:"#E30B5C",
-                      text:"❌ Canceled(ยกเลิก)"
-                    },
-                    {
-                      type:"box",
-                      layout:"horizontal",
-                      contents:[
-                        {
-                          type: "separator",
-                          margin:"xxl",
-                          color: "#9E9E9E"
-                        },
-                        {
-                          type:"text",
-                          text:"Banoffee Pie",
-                          adjustMode:"shrink-to-fit",
-                          offsetStart:"10px"
-                        },
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-          }
-        },
-      ],
-    };
-
     try{
+      const dataProduct = await prisma.categories.findMany({
+        include:{
+          product:true
+        }
+      })
+
+      const data = {
+        to: "Uaf85ed5e769f298f7255a8f0f6f9ae6a",
+        messages: [
+          {
+            type: "flex",
+            altText:"🏷 Product for you 🍞",
+            contents: {
+              type: "carousel",
+              contents: dataProduct.filter((status)=> status.product.length > 0)
+              .map((item) => (
+                [
+                  {
+                    type: "bubble",
+                    header:{
+                      type: "box",
+                      layout: "vertical",
+                      contents: [
+                        {
+                          type: "text",
+                          text: `🍞 ${item.name} `,
+                          weight: "bold",
+                          align: "center",
+                        },
+                      ]
+                    },
+                    body: {
+                      type: "box",
+                      layout: "vertical",
+                      contents: item.product.map((product)=> ([
+                        {
+                          type: "box",
+                          layout: "horizontal",
+                          margin: "10px",
+                          contents: [
+                            {
+                              type: "image",
+                              url: product.image,
+                              size: "sm",
+                              gravity: "center",
+                              aspectMode: "cover",
+
+                            },
+                            {
+                              type: "box",
+                              layout: "vertical",
+                              contents: [
+                                {
+                                  type: "text",
+                                  text: product.name,
+                                  wrap: true
+                                },
+                                {
+                                  type: "text",
+                                  text: product.description,
+                                  wrap: true,
+                                  color: "#C0C0C0",
+                                },
+                                {
+                                  type: "text",
+                                  text: `💰 Price ${product.price} THB`,
+                                  wrap: true
+                                },
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          type: "separator",
+                          color: "#C0C0C0",
+                          margin: "10px"
+                        }
+                      ]
+                    )).flat()
+                    }
+                  },
+                ]
+              )).flat()
+            }
+          },
+        ],
+      };
+
       const data_massage = await axios.post(
       "https://api.line.me/v2/bot/message/push",
       data,
@@ -216,7 +118,10 @@ export class productController extends Controller {
       }
     );  
     console.log("Message sent successfully:", data_massage.data);
-    return "Message sent successfully!";
+    return {
+      message:"Message sent successfully!",
+      dataProduct
+    };
     }catch(error){
       console.error("Error sending message:", error);
       return "Failed to send message.";
