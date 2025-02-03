@@ -32,7 +32,7 @@ const models = {
         "dataType": "refObject",
         "properties": {
             "destination": { "dataType": "string" },
-            "events": { "dataType": "array", "array": { "dataType": "nestedObjectLiteral", "nestedProperties": { "message": { "dataType": "nestedObjectLiteral", "nestedProperties": { "quoteToken": { "dataType": "string" }, "text": { "dataType": "string", "required": true }, "type": { "dataType": "string", "required": true }, "id": { "dataType": "string" } }, "required": true }, "timestamp": { "dataType": "double", "required": true }, "source": { "dataType": "nestedObjectLiteral", "nestedProperties": { "type": { "dataType": "string", "required": true }, "userId": { "dataType": "string", "required": true } }, "required": true }, "replyToken": { "dataType": "string", "required": true }, "type": { "dataType": "string", "required": true }, "webhookEventId": { "dataType": "string" }, "deliveryContext": { "ref": "Record_string.any_" }, "mode": { "dataType": "string" } } }, "required": true },
+            "events": { "dataType": "array", "array": { "dataType": "nestedObjectLiteral", "nestedProperties": { "message": { "dataType": "nestedObjectLiteral", "nestedProperties": { "emojis": { "dataType": "union", "subSchemas": [{ "dataType": "array", "array": { "dataType": "string" } }, { "dataType": "array", "array": { "dataType": "nestedObjectLiteral", "nestedProperties": { "length": { "dataType": "double", "required": true }, "index": { "dataType": "double", "required": true }, "emojiId": { "dataType": "string", "required": true }, "productId": { "dataType": "string", "required": true } } } }] }, "keywords": { "dataType": "array", "array": { "dataType": "string" } }, "stickerResourceType": { "dataType": "string" }, "packageId": { "dataType": "string" }, "stickerId": { "dataType": "string" }, "quoteToken": { "dataType": "string" }, "text": { "dataType": "string" }, "type": { "dataType": "string", "required": true }, "id": { "dataType": "string" } }, "required": true }, "timestamp": { "dataType": "double", "required": true }, "source": { "dataType": "nestedObjectLiteral", "nestedProperties": { "type": { "dataType": "string", "required": true }, "userId": { "dataType": "string", "required": true } }, "required": true }, "replyToken": { "dataType": "string", "required": true }, "type": { "dataType": "string", "required": true }, "webhookEventId": { "dataType": "string" }, "deliveryContext": { "ref": "Record_string.any_" }, "mode": { "dataType": "string" } } }, "required": true },
         },
         "additionalProperties": false,
     },
@@ -109,6 +109,29 @@ function RegisterRoutes(app) {
                 const controller = new webhookController_1.webhookController();
                 yield templateService.apiHandler({
                     methodName: 'receiveWebhook',
+                    controller,
+                    response,
+                    next,
+                    validatedArgs,
+                    successStatus: undefined,
+                });
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    const argswebhookController_getProfile = {};
+    app.get('/api/webhook', ...((0, runtime_1.fetchMiddlewares)(webhookController_1.webhookController)), ...((0, runtime_1.fetchMiddlewares)(webhookController_1.webhookController.prototype.getProfile)), function webhookController_getProfile(request, response, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+            let validatedArgs = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argswebhookController_getProfile, request, response });
+                const controller = new webhookController_1.webhookController();
+                yield templateService.apiHandler({
+                    methodName: 'getProfile',
                     controller,
                     response,
                     next,

@@ -29,7 +29,7 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "destination": {"dataType":"string"},
-            "events": {"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"message":{"dataType":"nestedObjectLiteral","nestedProperties":{"quoteToken":{"dataType":"string"},"text":{"dataType":"string","required":true},"type":{"dataType":"string","required":true},"id":{"dataType":"string"}},"required":true},"timestamp":{"dataType":"double","required":true},"source":{"dataType":"nestedObjectLiteral","nestedProperties":{"type":{"dataType":"string","required":true},"userId":{"dataType":"string","required":true}},"required":true},"replyToken":{"dataType":"string","required":true},"type":{"dataType":"string","required":true},"webhookEventId":{"dataType":"string"},"deliveryContext":{"ref":"Record_string.any_"},"mode":{"dataType":"string"}}},"required":true},
+            "events": {"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"message":{"dataType":"nestedObjectLiteral","nestedProperties":{"emojis":{"dataType":"union","subSchemas":[{"dataType":"array","array":{"dataType":"string"}},{"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"length":{"dataType":"double","required":true},"index":{"dataType":"double","required":true},"emojiId":{"dataType":"string","required":true},"productId":{"dataType":"string","required":true}}}}]},"keywords":{"dataType":"array","array":{"dataType":"string"}},"stickerResourceType":{"dataType":"string"},"packageId":{"dataType":"string"},"stickerId":{"dataType":"string"},"quoteToken":{"dataType":"string"},"text":{"dataType":"string"},"type":{"dataType":"string","required":true},"id":{"dataType":"string"}},"required":true},"timestamp":{"dataType":"double","required":true},"source":{"dataType":"nestedObjectLiteral","nestedProperties":{"type":{"dataType":"string","required":true},"userId":{"dataType":"string","required":true}},"required":true},"replyToken":{"dataType":"string","required":true},"type":{"dataType":"string","required":true},"webhookEventId":{"dataType":"string"},"deliveryContext":{"ref":"Record_string.any_"},"mode":{"dataType":"string"}}},"required":true},
         },
         "additionalProperties": false,
     },
@@ -122,6 +122,35 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'receiveWebhook',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argswebhookController_getProfile: Record<string, TsoaRoute.ParameterSchema> = {
+        };
+        app.get('/api/webhook',
+            ...(fetchMiddlewares<RequestHandler>(webhookController)),
+            ...(fetchMiddlewares<RequestHandler>(webhookController.prototype.getProfile)),
+
+            async function webhookController_getProfile(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argswebhookController_getProfile, request, response });
+
+                const controller = new webhookController();
+
+              await templateService.apiHandler({
+                methodName: 'getProfile',
                 controller,
                 response,
                 next,

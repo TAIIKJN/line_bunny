@@ -17,6 +17,8 @@ model User {
   id     String @id @default(uuid())
   userId String
   name   String
+
+  order  Order[]
 }
 
 model Product {
@@ -36,6 +38,7 @@ model Categories {
   id          String @id @default(uuid())
   name        String
   description String
+  type        String  @default("Drink")
 
   product Product[]
 }
@@ -45,6 +48,8 @@ model Order {
   total      String
   quantity   Int
   createDate DateTime? @default(now())
+  userId     String 
+  user       User @relation(fields: [userId], references: [id])
 
   orderDetail OrderDetail[]
 }

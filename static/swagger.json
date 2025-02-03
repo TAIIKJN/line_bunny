@@ -23,6 +23,59 @@
 							"properties": {
 								"message": {
 									"properties": {
+										"emojis": {
+											"anyOf": [
+												{
+													"items": {
+														"type": "string"
+													},
+													"type": "array"
+												},
+												{
+													"items": {
+														"properties": {
+															"length": {
+																"type": "number",
+																"format": "double"
+															},
+															"index": {
+																"type": "number",
+																"format": "double"
+															},
+															"emojiId": {
+																"type": "string"
+															},
+															"productId": {
+																"type": "string"
+															}
+														},
+														"required": [
+															"length",
+															"index",
+															"emojiId",
+															"productId"
+														],
+														"type": "object"
+													},
+													"type": "array"
+												}
+											]
+										},
+										"keywords": {
+											"items": {
+												"type": "string"
+											},
+											"type": "array"
+										},
+										"stickerResourceType": {
+											"type": "string"
+										},
+										"packageId": {
+											"type": "string"
+										},
+										"stickerId": {
+											"type": "string"
+										},
 										"quoteToken": {
 											"type": "string"
 										},
@@ -37,7 +90,6 @@
 										}
 									},
 									"required": [
-										"text",
 										"type"
 									],
 									"type": "object"
@@ -224,10 +276,22 @@
 				"operationId": "ReceiveWebhook",
 				"responses": {
 					"200": {
-						"description": "Webhook received"
-					},
-					"204": {
-						"description": "No content"
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
 					}
 				},
 				"security": [],
@@ -242,6 +306,16 @@
 						}
 					}
 				}
+			},
+			"get": {
+				"operationId": "GetProfile",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [],
+				"parameters": []
 			}
 		},
 		"/user": {
@@ -394,6 +468,9 @@
 															},
 															{
 																"properties": {
+																	"type": {
+																		"type": "string"
+																	},
 																	"description": {
 																		"type": "string"
 																	},
@@ -405,6 +482,7 @@
 																	}
 																},
 																"required": [
+																	"type",
 																	"description",
 																	"name",
 																	"id"

@@ -422,6 +422,7 @@ let orderController = class orderController extends tsoa_1.Controller {
                     data: {
                         total: req.total,
                         quantity: req.quantity,
+                        userId: req.userId,
                     },
                 });
                 const dataDetail = yield req.orderDetail.map((item) => {

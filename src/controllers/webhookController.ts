@@ -1,4 +1,11 @@
-import { Body, Controller, Post, Response, Route } from "tsoa";
+import { PrismaClient } from "@prisma/client";
+import axios from "axios";
+import { Body, Controller, Get, Post, Response, Route } from "tsoa";
+
+const token =
+  "mTuXUjOm8dKhn805+2xOAOfDoq5NBEzYT9hx+DbF8IFCInIHLZbZ1orjdtyrCADJmsCfKzlJUNZF9kzRw24K9zrPj4tnkJkAAsYJtO0O1eGGWOMAVoB2J2B7R03I/tp+HFYRVVD09GEod/NiCukB4QdB04t89/1O/w1cDnyilFU=";
+
+const prisma = new PrismaClient()
 
 interface WebhookPayload {
     destination?: string;
@@ -14,10 +21,15 @@ interface WebhookPayload {
         };
         timestamp: number;
         message: {
-            id?:string
+            id?:string;
             type: string;
-            text: string;
-            quoteToken?:string
+            text?: string;
+            quoteToken?:string;
+            stickerId?:string;
+            packageId?:string;
+            stickerResourceType?:string;
+            keywords?: string[];
+            emojis?: string[] | { productId: string; emojiId: string; index: number; length: number }[];
         };
     }>;
 }
@@ -37,6 +49,44 @@ export class webhookController extends Controller {
             // ตรวจสอบว่ามี events อย่างน้อยหนึ่งรายการ
             if (payload.events.length > 0) {
                 console.log("Event Source:", payload.events[0]?.source);
+
+                const dataUserLine = await axios.get(
+                    `https://api.line.me/v2/bot/profile/${payload.events[0].source.userId}`,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                      },
+                    }
+                  );
+
+                if(dataUserLine){
+                    const dataUser = await prisma.user.findFirst({
+                        where:{
+                            userId:dataUserLine.data.userId
+                        }
+                    })
+
+                    if(!dataUser){
+                        await prisma.user.create({
+                            data:{
+                                userId:dataUserLine.data.userId,
+                                name:dataUserLine.data.displayName
+                            }
+                        })
+                    } else {
+                        await prisma.user.update({
+                            data:{
+                                name:dataUserLine.data.displayName
+                            },
+                            where:{
+                                id:dataUser.id,
+                                userId:dataUserLine.data.userId
+                            }
+                        })
+                    }
+                }
+                
             }
             
          // หากต้องการตอบกลับจากการรับ webhook
@@ -47,6 +97,22 @@ export class webhookController extends Controller {
             this.setStatus(500);
             return { message: "Internal Server Error" };
         }
+    }
+
+    @Get()
+    public async getProfile(){
+        const data_massage = await axios.get(
+            `https://api.line.me/v2/bot/profile/Uaf85ed5e769f298f7255a8f0f6f9ae6a`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          console.log("data_massage",data_massage);
+          
     }
 }
 

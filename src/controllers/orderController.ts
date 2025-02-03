@@ -9,6 +9,7 @@ const token =
 interface OrderData {
   total: string;
   quantity: number;
+  userId:string,
   orderDetail: OrderDetailData[];
 }
 
@@ -398,8 +399,8 @@ export class orderController extends Controller {
         },
       ],
     };
-
-console.log(JSON.stringify(data));
+    
+    console.log(JSON.stringify(data));
 
       const data_massage = await axios.post(
         "https://api.line.me/v2/bot/message/push",
@@ -430,6 +431,7 @@ console.log(JSON.stringify(data));
         data: {
           total: req.total,
           quantity: req.quantity,
+          userId: req.userId,
         },
       });
 

@@ -31,6 +31,7 @@ app.use(
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof ValidateError) {
+    
       console.log("app error",err.fields);
       res.status(400).json({
           message: "Validation failed",

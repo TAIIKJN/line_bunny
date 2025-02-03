@@ -44,7 +44,7 @@ export class productController extends Controller {
                       contents: [
                         {
                           type: "text",
-                          text: `🍞 ${item.name} `,
+                          text: `${item.type==='Drink' ? '🍹' : '🍰' } ${item.name} `,
                           weight: "bold",
                           align: "center",
                         },

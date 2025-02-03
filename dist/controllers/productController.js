@@ -54,7 +54,7 @@ let productController = class productController extends tsoa_1.Controller {
                                             contents: [
                                                 {
                                                     type: "text",
-                                                    text: `🍞 ${item.name} `,
+                                                    text: `${item.type === 'Drink' ? '🍹' : '🍰'} ${item.name} `,
                                                     weight: "bold",
                                                     align: "center",
                                                 },
