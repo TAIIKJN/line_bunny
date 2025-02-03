@@ -25,12 +25,13 @@ exports.orderController = void 0;
 const tsoa_1 = require("tsoa");
 const axios_1 = __importDefault(require("axios"));
 const client_1 = require("@prisma/client");
+const dayjs_1 = __importDefault(require("dayjs"));
 const prisma = new client_1.PrismaClient();
 const token = "mTuXUjOm8dKhn805+2xOAOfDoq5NBEzYT9hx+DbF8IFCInIHLZbZ1orjdtyrCADJmsCfKzlJUNZF9kzRw24K9zrPj4tnkJkAAsYJtO0O1eGGWOMAVoB2J2B7R03I/tp+HFYRVVD09GEod/NiCukB4QdB04t89/1O/w1cDnyilFU=";
 let orderController = class orderController extends tsoa_1.Controller {
     getOrderAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e;
+            var _a, _b, _c, _d, _e, _f;
             try {
                 const orderData = yield prisma.order.findFirst({
                     include: {
@@ -62,6 +63,13 @@ let orderController = class orderController extends tsoa_1.Controller {
                                             align: "center",
                                             weight: "bold",
                                         },
+                                        {
+                                            type: "text",
+                                            text: `${(0, dayjs_1.default)((_a = orderData === null || orderData === void 0 ? void 0 : orderData.createDate) !== null && _a !== void 0 ? _a : new Date()).format("ddd DD MMM YYYY")}`,
+                                            align: "end",
+                                            wrap: true,
+                                            color: "#C0C0C0",
+                                        },
                                     ],
                                 },
                                 body: {
@@ -72,7 +80,7 @@ let orderController = class orderController extends tsoa_1.Controller {
                                             type: "box",
                                             layout: "vertical",
                                             margin: "10px",
-                                            contents: ((_a = orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail) !== null && _a !== void 0 ? _a : [])
+                                            contents: ((_b = orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail) !== null && _b !== void 0 ? _b : [])
                                                 .filter(data => data.state === 'pending').length > 0 ? [
                                                 {
                                                     type: "text",
@@ -121,7 +129,7 @@ let orderController = class orderController extends tsoa_1.Controller {
                                             type: "box",
                                             layout: "vertical",
                                             margin: "10px",
-                                            contents: ((_b = orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail) !== null && _b !== void 0 ? _b : [])
+                                            contents: ((_c = orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail) !== null && _c !== void 0 ? _c : [])
                                                 .filter(data => data.state === 'preparing').length > 0 ? [
                                                 {
                                                     type: "text",
@@ -170,7 +178,7 @@ let orderController = class orderController extends tsoa_1.Controller {
                                             type: "box",
                                             layout: "vertical",
                                             margin: "10px",
-                                            contents: ((_c = orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail) !== null && _c !== void 0 ? _c : [])
+                                            contents: ((_d = orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail) !== null && _d !== void 0 ? _d : [])
                                                 .filter(data => data.state === 'readyToServe').length > 0 ? [
                                                 {
                                                     type: "text",
@@ -219,7 +227,7 @@ let orderController = class orderController extends tsoa_1.Controller {
                                             type: "box",
                                             layout: "vertical",
                                             margin: "10px",
-                                            contents: ((_d = orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail) !== null && _d !== void 0 ? _d : [])
+                                            contents: ((_e = orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail) !== null && _e !== void 0 ? _e : [])
                                                 .filter(data => data.state === 'served').length > 0 ? [
                                                 {
                                                     type: "text",
@@ -268,7 +276,7 @@ let orderController = class orderController extends tsoa_1.Controller {
                                             type: "box",
                                             layout: "vertical",
                                             margin: "10px",
-                                            contents: ((_e = orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail) !== null && _e !== void 0 ? _e : [])
+                                            contents: ((_f = orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail) !== null && _f !== void 0 ? _f : [])
                                                 .filter(data => data.state === 'canceled').length > 0 ? [
                                                 {
                                                     type: "text",
@@ -418,6 +426,13 @@ let orderController = class orderController extends tsoa_1.Controller {
     createOrder(req) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                console.log("req.userId", req.userId);
+                const user = yield prisma.user.findFirst({
+                    where: { userId: req.userId }
+                });
+                if (!user) {
+                    return "ไม่พบลูกค้า";
+                }
                 const dataOrder = yield prisma.order.create({
                     data: {
                         total: req.total,
@@ -425,7 +440,8 @@ let orderController = class orderController extends tsoa_1.Controller {
                         userId: req.userId,
                     },
                 });
-                const dataDetail = yield req.orderDetail.map((item) => {
+                console.log("dataOrder", dataOrder);
+                const dataDetail = req.orderDetail.map((item) => {
                     return Object.assign(Object.assign({}, item), { orderId: dataOrder.id });
                 });
                 const dataOrderDetail = yield prisma.orderDetail.createManyAndReturn({
@@ -441,6 +457,18 @@ let orderController = class orderController extends tsoa_1.Controller {
             }
         });
     }
+    updateOrder(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = yield prisma.order.update({
+                where: {
+                    id: "74eb667e-2a0a-416e-ada7-ffe2b747d74c"
+                },
+                data: {
+                    userId: "Uaf85ed5e769f298f7255a8f0f6f9ae6a"
+                }
+            });
+        });
+    }
 };
 exports.orderController = orderController;
 __decorate([
@@ -453,6 +481,10 @@ __decorate([
     (0, tsoa_1.Post)(),
     __param(0, (0, tsoa_1.Body)())
 ], orderController.prototype, "createOrder", null);
+__decorate([
+    (0, tsoa_1.Patch)(),
+    __param(0, (0, tsoa_1.Body)())
+], orderController.prototype, "updateOrder", null);
 exports.orderController = orderController = __decorate([
     (0, tsoa_1.Route)("order")
 ], orderController);

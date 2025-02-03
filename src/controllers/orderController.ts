@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Post, Response, Route } from "tsoa";
+import { Body, Controller, Get, Patch, Post, Response, Route } from "tsoa";
 import axios from "axios";
 import { PrismaClient } from "@prisma/client";
+import dayjs from "dayjs";
 
 const prisma = new PrismaClient();
 const token =
@@ -40,7 +41,8 @@ export class orderController extends Controller {
     });
     
     const data = {
-      to: "Uaf85ed5e769f298f7255a8f0f6f9ae6a",
+      // to: "Uaf85ed5e769f298f7255a8f0f6f9ae6a",
+      to: "Ueeb495857a7d0cebc0ab77c06578a906",
       messages: [
         {
           type: "flex",
@@ -56,6 +58,13 @@ export class orderController extends Controller {
                   text: "🏷 Order status for you 🍞",
                   align: "center",
                    weight: "bold",
+                },
+                {
+                  type: "text",
+                  text: `${dayjs(orderData?.createDate ?? new Date()).format("ddd DD MMM YYYY")}`,
+                  align: "end",
+                  wrap: true,
+                  color: "#C0C0C0",
                 },
               ],
             },
@@ -427,6 +436,15 @@ export class orderController extends Controller {
   @Post()
   public async createOrder(@Body() req: OrderData) {
     try {
+      console.log("req.userId",req.userId,);
+      
+      const user = await prisma.user.findFirst({
+        where:{ userId:req.userId}
+      })
+      if(!user){
+        return "ไม่พบลูกค้า"
+      }
+
       const dataOrder = await prisma.order.create({
         data: {
           total: req.total,
@@ -435,7 +453,10 @@ export class orderController extends Controller {
         },
       });
 
-      const dataDetail = await req.orderDetail.map((item) => {
+      console.log("dataOrder",dataOrder);
+      
+
+      const dataDetail = req.orderDetail.map((item) => {
         return {
           ...item,
           orderId: dataOrder.id,
@@ -453,5 +474,17 @@ export class orderController extends Controller {
     } catch (error) {
       return error;
     }
+  }
+
+  @Patch()
+  public async updateOrder(@Body() req:OrderData){
+    const data = await prisma.order.update({
+      where:{
+        id:"74eb667e-2a0a-416e-ada7-ffe2b747d74c"
+      },
+      data:{
+        userId:"Uaf85ed5e769f298f7255a8f0f6f9ae6a"
+      }
+    })
   }
 }

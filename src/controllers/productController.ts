@@ -26,7 +26,8 @@ export class productController extends Controller {
       })
 
       const data = {
-        to: "Uaf85ed5e769f298f7255a8f0f6f9ae6a",
+        // to: "Uaf85ed5e769f298f7255a8f0f6f9ae6a",
+        to: "Ueeb495857a7d0cebc0ab77c06578a906",
         messages: [
           {
             type: "flex",
@@ -99,22 +100,22 @@ export class productController extends Controller {
                       ]
                     )).flat()
                     },
-                    footer:{
-                      type: "box",
-                      layout: "horizontal",
-                      contents: [
-                        {
-                          type: "button",
-                          style: "primary",
-                          action: {
-                            type: "postback",
-                            label: "Order Food & Drinks",
-                            data: "action=OrderFoodDrinks",
-                            displayText: "Order Food & Drinks"
-                          }
-                        }
-                      ]
-                    }
+                    // footer:{
+                    //   type: "box",
+                    //   layout: "horizontal",
+                    //   contents: [
+                    //     {
+                    //       type: "button",
+                    //       style: "primary",
+                    //       action: {
+                    //         type: "postback",
+                    //         label: "Order Food & Drinks",
+                    //         data: "action=OrderFoodDrinks",
+                    //         displayText: "Order Food & Drinks"
+                    //       }
+                    //     }
+                    //   ]
+                    // }
                   },
                 ]
               )).flat()

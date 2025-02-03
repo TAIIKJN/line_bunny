@@ -107,22 +107,22 @@ let productController = class productController extends tsoa_1.Controller {
                                                 }
                                             ])).flat()
                                         },
-                                        footer: {
-                                            type: "box",
-                                            layout: "horizontal",
-                                            contents: [
-                                                {
-                                                    type: "button",
-                                                    style: "primary",
-                                                    action: {
-                                                        type: "postback",
-                                                        label: "Order Food & Drinks",
-                                                        data: "action=OrderFoodDrinks",
-                                                        displayText: "Order Food & Drinks"
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        // footer:{
+                                        //   type: "box",
+                                        //   layout: "horizontal",
+                                        //   contents: [
+                                        //     {
+                                        //       type: "button",
+                                        //       style: "primary",
+                                        //       action: {
+                                        //         type: "postback",
+                                        //         label: "Order Food & Drinks",
+                                        //         data: "action=OrderFoodDrinks",
+                                        //         displayText: "Order Food & Drinks"
+                                        //       }
+                                        //     }
+                                        //   ]
+                                        // }
                                     },
                                 ])).flat()
                             }

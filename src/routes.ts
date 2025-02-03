@@ -72,6 +72,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "total": {"dataType":"string","required":true},
             "quantity": {"dataType":"double","required":true},
+            "userId": {"dataType":"string","required":true},
             "orderDetail": {"dataType":"array","array":{"dataType":"refObject","ref":"OrderDetailData"},"required":true},
         },
         "additionalProperties": false,
@@ -416,6 +417,36 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'createOrder',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsorderController_updateOrder: Record<string, TsoaRoute.ParameterSchema> = {
+                req: {"in":"body","name":"req","required":true,"ref":"OrderData"},
+        };
+        app.patch('/api/order',
+            ...(fetchMiddlewares<RequestHandler>(orderController)),
+            ...(fetchMiddlewares<RequestHandler>(orderController.prototype.updateOrder)),
+
+            async function orderController_updateOrder(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsorderController_updateOrder, request, response });
+
+                const controller = new orderController();
+
+              await templateService.apiHandler({
+                methodName: 'updateOrder',
                 controller,
                 response,
                 next,

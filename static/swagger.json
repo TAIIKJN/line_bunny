@@ -228,6 +228,9 @@
 						"type": "number",
 						"format": "double"
 					},
+					"userId": {
+						"type": "string"
+					},
 					"orderDetail": {
 						"items": {
 							"$ref": "#/components/schemas/OrderDetailData"
@@ -238,6 +241,7 @@
 				"required": [
 					"total",
 					"quantity",
+					"userId",
 					"orderDetail"
 				],
 				"type": "object",
@@ -595,6 +599,26 @@
 								"schema": {}
 							}
 						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/OrderData"
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"operationId": "UpdateOrder",
+				"responses": {
+					"204": {
+						"description": "No content"
 					}
 				},
 				"security": [],

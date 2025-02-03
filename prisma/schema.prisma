@@ -15,7 +15,7 @@ datasource db {
 
 model User {
   id     String @id @default(uuid())
-  userId String
+  userId String @unique
   name   String
 
   order  Order[]
@@ -49,7 +49,7 @@ model Order {
   quantity   Int
   createDate DateTime? @default(now())
   userId     String 
-  user       User @relation(fields: [userId], references: [id])
+  user       User @relation(fields: [userId], references: [userId])
 
   orderDetail OrderDetail[]
 }

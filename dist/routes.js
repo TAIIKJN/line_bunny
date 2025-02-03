@@ -75,6 +75,7 @@ const models = {
         "properties": {
             "total": { "dataType": "string", "required": true },
             "quantity": { "dataType": "double", "required": true },
+            "userId": { "dataType": "string", "required": true },
             "orderDetail": { "dataType": "array", "array": { "dataType": "refObject", "ref": "OrderDetailData" }, "required": true },
         },
         "additionalProperties": false,
@@ -347,6 +348,31 @@ function RegisterRoutes(app) {
                 const controller = new orderController_1.orderController();
                 yield templateService.apiHandler({
                     methodName: 'createOrder',
+                    controller,
+                    response,
+                    next,
+                    validatedArgs,
+                    successStatus: undefined,
+                });
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    const argsorderController_updateOrder = {
+        req: { "in": "body", "name": "req", "required": true, "ref": "OrderData" },
+    };
+    app.patch('/api/order', ...((0, runtime_1.fetchMiddlewares)(orderController_1.orderController)), ...((0, runtime_1.fetchMiddlewares)(orderController_1.orderController.prototype.updateOrder)), function orderController_updateOrder(request, response, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+            let validatedArgs = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsorderController_updateOrder, request, response });
+                const controller = new orderController_1.orderController();
+                yield templateService.apiHandler({
+                    methodName: 'updateOrder',
                     controller,
                     response,
                     next,
