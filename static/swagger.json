@@ -344,10 +344,93 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "string",
-									"enum": [
-										"Message sent successfully!",
-										"Failed to send message."
+									"anyOf": [
+										{
+											"properties": {
+												"dataProduct": {
+													"items": {
+														"allOf": [
+															{
+																"properties": {
+																	"product": {
+																		"items": {
+																			"properties": {
+																				"categoriesId": {
+																					"type": "string"
+																				},
+																				"image": {
+																					"type": "string"
+																				},
+																				"price": {
+																					"type": "string"
+																				},
+																				"description": {
+																					"type": "string"
+																				},
+																				"name": {
+																					"type": "string"
+																				},
+																				"id": {
+																					"type": "string"
+																				}
+																			},
+																			"required": [
+																				"categoriesId",
+																				"image",
+																				"price",
+																				"description",
+																				"name",
+																				"id"
+																			],
+																			"type": "object"
+																		},
+																		"type": "array"
+																	}
+																},
+																"required": [
+																	"product"
+																],
+																"type": "object"
+															},
+															{
+																"properties": {
+																	"description": {
+																		"type": "string"
+																	},
+																	"name": {
+																		"type": "string"
+																	},
+																	"id": {
+																		"type": "string"
+																	}
+																},
+																"required": [
+																	"description",
+																	"name",
+																	"id"
+																],
+																"type": "object"
+															}
+														]
+													},
+													"type": "array"
+												},
+												"message": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"dataProduct",
+												"message"
+											],
+											"type": "object"
+										},
+										{
+											"type": "string",
+											"enum": [
+												"Failed to send message."
+											]
+										}
 									]
 								}
 							}

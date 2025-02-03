@@ -30,6 +30,7 @@ const token = "mTuXUjOm8dKhn805+2xOAOfDoq5NBEzYT9hx+DbF8IFCInIHLZbZ1orjdtyrCADJm
 let orderController = class orderController extends tsoa_1.Controller {
     getOrderAll() {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c, _d, _e;
             try {
                 const orderData = yield prisma.order.findFirst({
                     include: {
@@ -58,7 +59,8 @@ let orderController = class orderController extends tsoa_1.Controller {
                                         {
                                             type: "text",
                                             text: "🏷 Order status for you 🍞",
-                                            align: "center"
+                                            align: "center",
+                                            weight: "bold",
                                         },
                                     ],
                                 },
@@ -69,7 +71,9 @@ let orderController = class orderController extends tsoa_1.Controller {
                                         {
                                             type: "box",
                                             layout: "vertical",
-                                            contents: [
+                                            margin: "10px",
+                                            contents: ((_a = orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail) !== null && _a !== void 0 ? _a : [])
+                                                .filter(data => data.state === 'pending').length > 0 ? [
                                                 {
                                                     type: "text",
                                                     color: "#CC7722",
@@ -82,29 +86,43 @@ let orderController = class orderController extends tsoa_1.Controller {
                                                     contents: orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail.filter(data => data.state === 'pending').map(item => ([
                                                         {
                                                             type: "box",
-                                                            layout: "horizontal",
+                                                            layout: "vertical",
                                                             contents: [
-                                                                {
-                                                                    type: "separator",
-                                                                    margin: "xxl",
-                                                                    color: "#9E9E9E",
-                                                                },
                                                                 {
                                                                     type: "text",
                                                                     text: item.product.name,
-                                                                    adjustMode: "shrink-to-fit",
-                                                                    offsetStart: "10px",
+                                                                    wrap: true
                                                                 },
+                                                                {
+                                                                    type: "box",
+                                                                    layout: "horizontal",
+                                                                    contents: [
+                                                                        {
+                                                                            type: "text",
+                                                                            text: `x ${item.quantity}`,
+                                                                            color: "#C0C0C0",
+                                                                            align: "end",
+                                                                        },
+                                                                        {
+                                                                            type: "text",
+                                                                            text: `${item.total} THB`,
+                                                                            color: "#C0C0C0",
+                                                                            align: "end",
+                                                                        },
+                                                                    ]
+                                                                }
                                                             ].flat()
-                                                        }
+                                                        },
                                                     ])).flat()
                                                 },
-                                            ],
+                                            ] : []
                                         },
                                         {
                                             type: "box",
                                             layout: "vertical",
-                                            contents: [
+                                            margin: "10px",
+                                            contents: ((_b = orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail) !== null && _b !== void 0 ? _b : [])
+                                                .filter(data => data.state === 'preparing').length > 0 ? [
                                                 {
                                                     type: "text",
                                                     color: "#FF9F50",
@@ -117,29 +135,43 @@ let orderController = class orderController extends tsoa_1.Controller {
                                                     contents: orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail.filter(data => data.state === 'preparing').map(item => ([
                                                         {
                                                             type: "box",
-                                                            layout: "horizontal",
+                                                            layout: "vertical",
                                                             contents: [
-                                                                {
-                                                                    type: "separator",
-                                                                    margin: "xxl",
-                                                                    color: "#9E9E9E",
-                                                                },
                                                                 {
                                                                     type: "text",
                                                                     text: item.product.name,
-                                                                    adjustMode: "shrink-to-fit",
-                                                                    offsetStart: "10px",
+                                                                    wrap: true
                                                                 },
+                                                                {
+                                                                    type: "box",
+                                                                    layout: "horizontal",
+                                                                    contents: [
+                                                                        {
+                                                                            type: "text",
+                                                                            text: `x ${item.quantity}`,
+                                                                            color: "#C0C0C0",
+                                                                            align: "end",
+                                                                        },
+                                                                        {
+                                                                            type: "text",
+                                                                            text: `${item.total} THB`,
+                                                                            color: "#C0C0C0",
+                                                                            align: "end",
+                                                                        },
+                                                                    ]
+                                                                }
                                                             ].flat()
                                                         }
                                                     ])).flat(),
                                                 },
-                                            ]
+                                            ] : []
                                         },
                                         {
                                             type: "box",
                                             layout: "vertical",
-                                            contents: [
+                                            margin: "10px",
+                                            contents: ((_c = orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail) !== null && _c !== void 0 ? _c : [])
+                                                .filter(data => data.state === 'readyToServe').length > 0 ? [
                                                 {
                                                     type: "text",
                                                     color: "#008080",
@@ -152,29 +184,43 @@ let orderController = class orderController extends tsoa_1.Controller {
                                                     contents: orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail.filter(data => data.state === 'readyToServe').map(item => ([
                                                         {
                                                             type: "box",
-                                                            layout: "horizontal",
+                                                            layout: "vertical",
                                                             contents: [
-                                                                {
-                                                                    type: "separator",
-                                                                    margin: "xxl",
-                                                                    color: "#9E9E9E",
-                                                                },
                                                                 {
                                                                     type: "text",
                                                                     text: item.product.name,
-                                                                    adjustMode: "shrink-to-fit",
-                                                                    offsetStart: "10px",
+                                                                    wrap: true
                                                                 },
+                                                                {
+                                                                    type: "box",
+                                                                    layout: "horizontal",
+                                                                    contents: [
+                                                                        {
+                                                                            type: "text",
+                                                                            text: `x ${item.quantity}`,
+                                                                            color: "#C0C0C0",
+                                                                            align: "end",
+                                                                        },
+                                                                        {
+                                                                            type: "text",
+                                                                            text: `${item.total} THB`,
+                                                                            color: "#C0C0C0",
+                                                                            align: "end",
+                                                                        },
+                                                                    ]
+                                                                }
                                                             ].flat()
                                                         }
                                                     ])).flat()
                                                 },
-                                            ],
+                                            ] : [],
                                         },
                                         {
                                             type: "box",
                                             layout: "vertical",
-                                            contents: [
+                                            margin: "10px",
+                                            contents: ((_d = orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail) !== null && _d !== void 0 ? _d : [])
+                                                .filter(data => data.state === 'served').length > 0 ? [
                                                 {
                                                     type: "text",
                                                     color: "#1E90FF",
@@ -187,69 +233,96 @@ let orderController = class orderController extends tsoa_1.Controller {
                                                     contents: orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail.filter(data => data.state === 'served').map(item => ([
                                                         {
                                                             type: "box",
-                                                            layout: "horizontal",
+                                                            layout: "vertical",
                                                             contents: [
-                                                                {
-                                                                    type: "separator",
-                                                                    margin: "xxl",
-                                                                    color: "#9E9E9E",
-                                                                },
                                                                 {
                                                                     type: "text",
                                                                     text: item.product.name,
-                                                                    adjustMode: "shrink-to-fit",
-                                                                    offsetStart: "10px",
+                                                                    wrap: true
                                                                 },
+                                                                {
+                                                                    type: "box",
+                                                                    layout: "horizontal",
+                                                                    contents: [
+                                                                        {
+                                                                            type: "text",
+                                                                            text: `x ${item.quantity}`,
+                                                                            color: "#C0C0C0",
+                                                                            align: "end",
+                                                                        },
+                                                                        {
+                                                                            type: "text",
+                                                                            text: `${item.total} THB`,
+                                                                            color: "#C0C0C0",
+                                                                            align: "end",
+                                                                        },
+                                                                    ]
+                                                                }
                                                             ].flat()
                                                         }
                                                     ])).flat(),
                                                 },
-                                            ]
+                                            ] : []
                                         },
                                         {
                                             type: "box",
                                             layout: "vertical",
-                                            contents: [
+                                            margin: "10px",
+                                            contents: ((_e = orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail) !== null && _e !== void 0 ? _e : [])
+                                                .filter(data => data.state === 'canceled').length > 0 ? [
                                                 {
                                                     type: "text",
                                                     color: "#E30B5C",
                                                     text: "❌ Canceled(ยกเลิก)",
                                                     offsetBottom: "2px",
                                                 },
-                                            ]
-                                        },
-                                        {
-                                            type: "box",
-                                            layout: "horizontal",
-                                            contents: orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail.filter(data => data.state === 'canceled').map(item => ([
                                                 {
                                                     type: "box",
                                                     layout: "horizontal",
-                                                    contents: [
+                                                    contents: orderData === null || orderData === void 0 ? void 0 : orderData.orderDetail.filter(data => data.state === 'canceled').map(item => ([
                                                         {
-                                                            type: "separator",
-                                                            margin: "xxl",
-                                                            color: "#9E9E9E",
-                                                        },
-                                                        {
-                                                            type: "text",
-                                                            text: item.product.name,
-                                                            adjustMode: "shrink-to-fit",
-                                                            offsetStart: "10px",
-                                                        },
-                                                    ].flat()
-                                                }
-                                            ])).flat(),
-                                        },
+                                                            type: "box",
+                                                            layout: "vertical",
+                                                            contents: [
+                                                                {
+                                                                    type: "text",
+                                                                    text: item.product.name,
+                                                                    wrap: true
+                                                                },
+                                                                {
+                                                                    type: "box",
+                                                                    layout: "horizontal",
+                                                                    contents: [
+                                                                        {
+                                                                            type: "text",
+                                                                            text: `x ${item.quantity}`,
+                                                                            color: "#C0C0C0",
+                                                                            align: "end",
+                                                                        },
+                                                                        {
+                                                                            type: "text",
+                                                                            text: `${item.total} THB`,
+                                                                            color: "#C0C0C0",
+                                                                            align: "end",
+                                                                        },
+                                                                    ]
+                                                                }
+                                                            ].flat()
+                                                        }
+                                                    ])).flat(),
+                                                },
+                                            ] : []
+                                        }
                                     ],
                                 },
                                 footer: {
                                     type: "box",
                                     layout: "vertical",
+                                    margin: "10px",
                                     contents: [
                                         {
                                             type: "text",
-                                            text: "🍰 ------------------------------ 🍰",
+                                            text: " ------------------------------ ",
                                             align: "center",
                                             offsetBottom: "2px",
                                         },
@@ -275,7 +348,7 @@ let orderController = class orderController extends tsoa_1.Controller {
                                         {
                                             type: "box",
                                             layout: "horizontal",
-                                            offsetBottom: "2px",
+                                            margin: "10px",
                                             contents: [
                                                 {
                                                     type: "text",
@@ -290,6 +363,30 @@ let orderController = class orderController extends tsoa_1.Controller {
                                                     align: "end"
                                                 }
                                             ]
+                                        },
+                                        {
+                                            type: "text",
+                                            text: " ------------------------------ ",
+                                            align: "center",
+                                            offsetBottom: "2px",
+                                        },
+                                        {
+                                            type: "text",
+                                            text: "🙏 Thank you for your order",
+                                            offsetBottom: "2px",
+                                            wrap: true
+                                        },
+                                        {
+                                            type: "text",
+                                            text: "😊 We hope to serve you again soon.",
+                                            offsetBottom: "2px",
+                                            wrap: true
+                                        },
+                                        {
+                                            type: "text",
+                                            text: "🍰 Enjoy your food and drinks",
+                                            offsetBottom: "2px",
+                                            wrap: true
                                         },
                                     ]
                                 }

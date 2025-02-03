@@ -32,7 +32,7 @@ let webhookController = class webhookController extends tsoa_1.Controller {
 exports.webhookController = webhookController;
 __decorate([
     (0, tsoa_1.Post)(),
-    (0, tsoa_1.Response)(200, "Webhook received"),
+    (0, tsoa_1.Response)(200, "Webhook received successfully"),
     __param(0, (0, tsoa_1.Body)())
 ], webhookController.prototype, "receiveWebhook", null);
 exports.webhookController = webhookController = __decorate([
