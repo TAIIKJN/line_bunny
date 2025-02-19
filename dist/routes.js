@@ -20,6 +20,8 @@ const productController_1 = require("./controllers/productController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const orderController_1 = require("./controllers/orderController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+const mailController_1 = require("./controllers/mailController");
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const categoriesController_1 = require("./controllers/categoriesController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const models = {
@@ -77,6 +79,14 @@ const models = {
             "quantity": { "dataType": "double", "required": true },
             "userId": { "dataType": "string", "required": true },
             "orderDetail": { "dataType": "array", "array": { "dataType": "refObject", "ref": "OrderDetailData" }, "required": true },
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "sentEmail": {
+        "dataType": "refObject",
+        "properties": {
+            "email": { "dataType": "string", "required": true },
         },
         "additionalProperties": false,
     },
@@ -361,18 +371,41 @@ function RegisterRoutes(app) {
         });
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    const argsorderController_updateOrder = {
-        req: { "in": "body", "name": "req", "required": true, "ref": "OrderData" },
-    };
-    app.patch('/api/order', ...((0, runtime_1.fetchMiddlewares)(orderController_1.orderController)), ...((0, runtime_1.fetchMiddlewares)(orderController_1.orderController.prototype.updateOrder)), function orderController_updateOrder(request, response, next) {
+    const argsmailController_getUser = {};
+    app.get('/api/mail', ...((0, runtime_1.fetchMiddlewares)(mailController_1.mailController)), ...((0, runtime_1.fetchMiddlewares)(mailController_1.mailController.prototype.getUser)), function mailController_getUser(request, response, next) {
         return __awaiter(this, void 0, void 0, function* () {
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
             let validatedArgs = [];
             try {
-                validatedArgs = templateService.getValidatedArgs({ args: argsorderController_updateOrder, request, response });
-                const controller = new orderController_1.orderController();
+                validatedArgs = templateService.getValidatedArgs({ args: argsmailController_getUser, request, response });
+                const controller = new mailController_1.mailController();
                 yield templateService.apiHandler({
-                    methodName: 'updateOrder',
+                    methodName: 'getUser',
+                    controller,
+                    response,
+                    next,
+                    validatedArgs,
+                    successStatus: undefined,
+                });
+            }
+            catch (err) {
+                return next(err);
+            }
+        });
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    const argsmailController_sendOtp = {
+        body: { "in": "body", "name": "body", "required": true, "ref": "sentEmail" },
+    };
+    app.post('/api/mail', ...((0, runtime_1.fetchMiddlewares)(mailController_1.mailController)), ...((0, runtime_1.fetchMiddlewares)(mailController_1.mailController.prototype.sendOtp)), function mailController_sendOtp(request, response, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+            let validatedArgs = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsmailController_sendOtp, request, response });
+                const controller = new mailController_1.mailController();
+                yield templateService.apiHandler({
+                    methodName: 'sendOtp',
                     controller,
                     response,
                     next,

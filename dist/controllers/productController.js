@@ -37,7 +37,8 @@ let productController = class productController extends tsoa_1.Controller {
                     }
                 });
                 const data = {
-                    to: "Uaf85ed5e769f298f7255a8f0f6f9ae6a",
+                    // to: "Uaf85ed5e769f298f7255a8f0f6f9ae6a",
+                    to: "Ueeb495857a7d0cebc0ab77c06578a906",
                     messages: [
                         {
                             type: "flex",

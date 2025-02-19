@@ -12,6 +12,8 @@ import { productController } from './controllers/productController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { orderController } from './controllers/orderController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { mailController } from './controllers/mailController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { categoriesController } from './controllers/categoriesController';
 import type { Request as ExRequest, Response as ExResponse, RequestHandler, Router } from 'express';
 
@@ -74,6 +76,14 @@ const models: TsoaRoute.Models = {
             "quantity": {"dataType":"double","required":true},
             "userId": {"dataType":"string","required":true},
             "orderDetail": {"dataType":"array","array":{"dataType":"refObject","ref":"OrderDetailData"},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "sentEmail": {
+        "dataType": "refObject",
+        "properties": {
+            "email": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -428,25 +438,54 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        const argsorderController_updateOrder: Record<string, TsoaRoute.ParameterSchema> = {
-                req: {"in":"body","name":"req","required":true,"ref":"OrderData"},
+        const argsmailController_getUser: Record<string, TsoaRoute.ParameterSchema> = {
         };
-        app.patch('/api/order',
-            ...(fetchMiddlewares<RequestHandler>(orderController)),
-            ...(fetchMiddlewares<RequestHandler>(orderController.prototype.updateOrder)),
+        app.get('/api/mail',
+            ...(fetchMiddlewares<RequestHandler>(mailController)),
+            ...(fetchMiddlewares<RequestHandler>(mailController.prototype.getUser)),
 
-            async function orderController_updateOrder(request: ExRequest, response: ExResponse, next: any) {
+            async function mailController_getUser(request: ExRequest, response: ExResponse, next: any) {
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
             let validatedArgs: any[] = [];
             try {
-                validatedArgs = templateService.getValidatedArgs({ args: argsorderController_updateOrder, request, response });
+                validatedArgs = templateService.getValidatedArgs({ args: argsmailController_getUser, request, response });
 
-                const controller = new orderController();
+                const controller = new mailController();
 
               await templateService.apiHandler({
-                methodName: 'updateOrder',
+                methodName: 'getUser',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsmailController_sendOtp: Record<string, TsoaRoute.ParameterSchema> = {
+                body: {"in":"body","name":"body","required":true,"ref":"sentEmail"},
+        };
+        app.post('/api/mail',
+            ...(fetchMiddlewares<RequestHandler>(mailController)),
+            ...(fetchMiddlewares<RequestHandler>(mailController.prototype.sendOtp)),
+
+            async function mailController_sendOtp(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsmailController_sendOtp, request, response });
+
+                const controller = new mailController();
+
+              await templateService.apiHandler({
+                methodName: 'sendOtp',
                 controller,
                 response,
                 next,

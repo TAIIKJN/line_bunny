@@ -49,26 +49,26 @@ let webhookController = class webhookController extends tsoa_1.Controller {
                     if (dataUserLine) {
                         const dataUser = yield prisma.user.findFirst({
                             where: {
-                                userId: dataUserLine.data.userId
-                            }
+                                userId: dataUserLine.data.userId,
+                            },
                         });
                         if (!dataUser) {
                             yield prisma.user.create({
                                 data: {
                                     userId: dataUserLine.data.userId,
-                                    name: dataUserLine.data.displayName
-                                }
+                                    name: dataUserLine.data.displayName,
+                                },
                             });
                         }
                         else {
                             yield prisma.user.update({
                                 data: {
-                                    name: dataUserLine.data.displayName
+                                    name: dataUserLine.data.displayName,
                                 },
                                 where: {
                                     id: dataUser.id,
-                                    userId: dataUserLine.data.userId
-                                }
+                                    userId: dataUserLine.data.userId,
+                                },
                             });
                         }
                     }

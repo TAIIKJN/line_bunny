@@ -1,53 +1,44 @@
 services:
-  traefik:
-    image: traefik:v3.2
-    container_name: traefik
-    restart: unless-stopped
-    ports:
-      - "8010:8010"  # HTTP entrypoint
-      - "8011:8011"  # Dashboard
-    volumes:
-      - ./traefik.yaml:/etc/traefik.yaml:ro
-      - ./routes.yaml:/etc/routes.yaml:ro
-      - /var/run/docker.sock:/var/run/docker.sock  # ให้ Traefik ติดต่อกับ Docker ได้
-    networks:
-      - proxy
-  my-server:
-    image: 'my-server:latest'
-    container_name: my-server
-    restart: unless-stopped
-    # image: docker.frappet.com/training/oom_be:latest
+  postal:
+    image: ghcr.io/postalserver/postal:latest
+    platform: linux/amd64
+    container_name: postal
+    # restart: unless-stopped
+    depends_on:
+      - mysql
+    ports: 
+      - 1025:1025
     environment:
-      DATABASE_URL: file:./dev.db
-      # DATABASE_URL: file:/app/data/dev.db  # เปลี่ยนให้ชี้ไปที่ path ใน volume
+      DATABASE_URL: mysql://root:root@mysql:3306/postal
       TZ: Asia/Bangkok
       DEBUG: "*"
-      # - TZ=Asia/Bangkok
-    ports:
-      - 8000:80
-    # deploy:
-    #   mode: replicated
-    #   replicas: 3
-
-    # labels:
-    #   - "traefik.enable=true"
-    #   - "traefik.http.routers.fe.rule=Host(`fe.oom.home`)"
-    build:
-      context: .
-    # command: >
-    #     sh -c "npx prisma generate && npx prisma migrate deploy && npm start"
     volumes:
-      - sqlite_data:/app/data
-      - ./data/letsencrypt:/etc/letsencrypt
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.my-server.rule=Host(`bunny.home`)"
-      - "traefik.http.services.my-server.loadbalancer.server.port=80"
-      - "traefik.http.routers.my-server.entrypoints=unsecure"
+      - postal_data:/app/data
+    command: 
+       sh -c "until nc -z mysql 3306; do echo waiting for mysql; sleep 2; done; \
+             postal initialize && postal smtp-server & postal web-server & postal worker"
 
-networks:
-  proxy:
-    external: true
+      # sh -c "until nc -z mysql 3306; do echo waiting for mysql; sleep 2; done;
+      #        postal initialize && postal start"
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    restart: unless-stopped
+    environment:
+      # DATABASE_URL: mysql://root:root@mysql:3306/mysql
+      MYSQL_ROOT_PASSWORD: root  # ตั้งรหัสผ่านสำหรับ root
+      MYSQL_DATABASE: postal
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - postal_net
 
 volumes:
-  sqlite_data:
+  mysql_data:
+  postal_data:
+
+networks:
+  postal_net:
+    driver: bridge

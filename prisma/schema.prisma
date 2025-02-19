@@ -9,16 +9,17 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id     String @id @default(uuid())
-  userId String @unique
+  id     String  @id @default(uuid())
+  userId String  @unique
   name   String
+  email  String?
 
-  order  Order[]
+  order Order[]
 }
 
 model Product {
@@ -38,7 +39,7 @@ model Categories {
   id          String @id @default(uuid())
   name        String
   description String
-  type        String  @default("Drink")
+  type        String @default("Drink")
 
   product Product[]
 }
@@ -48,8 +49,8 @@ model Order {
   total      String
   quantity   Int
   createDate DateTime? @default(now())
-  userId     String 
-  user       User @relation(fields: [userId], references: [userId])
+  userId     String
+  user       User      @relation(fields: [userId], references: [userId])
 
   orderDetail OrderDetail[]
 }
